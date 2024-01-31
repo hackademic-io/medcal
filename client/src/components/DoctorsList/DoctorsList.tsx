@@ -12,13 +12,13 @@ const DoctorsList = () => {
         <ul className="text-xl my-6">
           <li className="flex mb-4 items-center">
             <p className="mr-10">Doctor 1</p>
-            <Link href={'/calendar'} className="border-2 p-2">
+            <Link href={'/schedule'} className="border-2 p-2">
               Check available dates{' '}
             </Link>
           </li>
           <li className="flex items-center">
             <p className="mr-10">Doctor 2</p>
-            <Link href={'/calendar'} className="border-2 p-2">
+            <Link href={'/schedule'} className="border-2 p-2">
               Check available dates{' '}
             </Link>
           </li>

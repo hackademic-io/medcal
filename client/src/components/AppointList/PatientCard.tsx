@@ -1,6 +1,7 @@
 import { IPatientData } from '@/types/user.interface';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import MainModal from '../UI/Modals/MainModal';
 
 interface IPatientCard {
   data: IPatientData;
@@ -10,6 +11,8 @@ interface IPatientCard {
 }
 
 const PatientCard = ({ data, manage, key, showEmail }: IPatientCard) => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <div
       className="flex justify-between items-center border-b-2 pb-4"
@@ -25,12 +28,20 @@ const PatientCard = ({ data, manage, key, showEmail }: IPatientCard) => {
         {showEmail ? data.email : null}
       </div>
       {manage ? (
-        <div className="flex gap-3">
-          <Link href={'/re-schedule'} className="outline_btn">
-            Change
-          </Link>
-          <button className="cancel_btn">Cancel</button>
-        </div>
+        <>
+          {' '}
+          <div className="flex gap-3">
+            <Link href={'/re-schedule'} className="outline_btn">
+              Change
+            </Link>
+            <button onClick={() => setOpenModal(true)} className="cancel_btn">
+              Cancel
+            </button>
+          </div>
+          {openModal ? (
+            <MainModal showMenu={openModal} setShowMenu={setOpenModal} />
+          ) : null}
+        </>
       ) : null}
     </div>
   );
