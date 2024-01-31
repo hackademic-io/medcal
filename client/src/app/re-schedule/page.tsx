@@ -1,7 +1,7 @@
 import React from 'react';
 import CalendarComponent from '@/components/Calendar/CalendarComponent';
 
-const CalendarPage = () => {
+const ReSchedule = () => {
   return (
     <div className="h-full">
       <CalendarComponent />
@@ -9,4 +9,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default ReSchedule;

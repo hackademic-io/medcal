@@ -1,9 +1,25 @@
+import { IPatientData } from '@/types/user.interface';
 import React from 'react';
+import PatientCard from './PatientCard';
 
-const AdminList = () => {
+interface AdminListProps {
+  data: IPatientData[];
+}
+
+const AdminList: React.FC<AdminListProps> = ({ data }) => {
   return (
     <div className="mt-4 flex justify-between w-full">
-      <p>If admin/doctor : list of all appointments + ability to manage them</p>
+      {' '}
+      <div className="flex flex-col mt-4 w-full">
+        {data.map((appointmentData, index) => (
+          <PatientCard
+            data={appointmentData}
+            manage={true}
+            key={index}
+            showEmail={true}
+          />
+        ))}
+      </div>
     </div>
   );
 };
