@@ -45,7 +45,7 @@ const MainModal: React.FC<MainModalProps> = ({ showMenu, setShowMenu }) => {
         </div>
       </div>
       <div
-        className={`bg-black z-10 absolute w-screen h-screen top-0 left-0 duration-300 transition-all ${
+        className={`bg-black z-10 absolute w-screen h-screen min-h-[200%] top-0 left-0 duration-300 transition-all ${
           showMenu
             ? 'opacity-30 pointer-events-auto'
             : 'opacity-0 pointer-events-none'

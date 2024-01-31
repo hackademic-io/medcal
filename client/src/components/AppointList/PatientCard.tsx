@@ -2,6 +2,7 @@ import { IPatientData } from '@/types/user.interface';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import MainModal from '../UI/Modals/MainModal';
+import { useDisableBodyScroll } from '@/hooks/useDisableBodyScroll';
 
 interface IPatientCard {
   data: IPatientData;
@@ -12,6 +13,8 @@ interface IPatientCard {
 
 const PatientCard = ({ data, manage, key, showEmail }: IPatientCard) => {
   const [openModal, setOpenModal] = useState(false);
+
+  useDisableBodyScroll(openModal);
 
   return (
     <div
