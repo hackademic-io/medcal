@@ -1,8 +1,8 @@
 import React from 'react';
 import NeedToLogIn from '../PrivateRoutes/NeedToLogIn';
 import { useAuthContext } from '@/context/auth-context';
-import AdminList from '../AppointList/AdminList';
-import PatientList from '../AppointList/PatientList';
+import AdminMenu from '../AppointMenu/AdminMenu';
+import PatientMenu from '../AppointMenu/PatientMenu';
 import { IPatientData } from '@/types/user.interface';
 
 const ProfilePage = () => {
@@ -40,17 +40,32 @@ const ProfilePage = () => {
   return (
     <div>
       <h1 className="text-4xl font-bold">Profile page with user dashboard</h1>
-      <div className="mt-4">
-        <p className="text-xl">Your name: {user.name}</p>
-        <p className="text-xl">Your last name: {user.last_name}</p>
-        <p className="text-xl">Your email: {user.email}</p>
-        <p className="text-xl">Your role: {user.role}</p>
-      </div>
+      {user.role === 'Patient' ? (
+        <div className="mt-4">
+          <p className="text-xl">Your name: {user.name}</p>
+          <p className="text-xl">Your last name: {user.last_name}</p>
+          <p className="text-xl">Your email: {user.email}</p>
+          <p className="text-xl">Your role: {user.role}</p>
+        </div>
+      ) : (
+        <div className="mt-4 flex justify-between items-center text-xl ">
+          <p>
+            Name of the doctor: {user.name} {user.last_name}
+          </p>
+          <div className="flex gap-6">
+            <button className="blue_btn">Set available dates</button>
+            <button className="blue_btn">
+              Make an appointment for patient
+            </button>
+          </div>
+        </div>
+      )}
+
       <h1 className="text-4xl font-bold mt-4">Info about appointments</h1>
       {user.role === 'Patient' ? (
-        <PatientList data={testPatientsData} />
+        <PatientMenu data={testPatientsData} />
       ) : (
-        <AdminList data={testPatientsData} />
+        <AdminMenu data={testPatientsData} />
       )}
     </div>
   );

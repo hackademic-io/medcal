@@ -2,15 +2,15 @@ import { IPatientData } from '@/types/user.interface';
 import React from 'react';
 import PatientCard from './PatientCard';
 
-interface AdminListProps {
+interface AdminMenuProps {
   data: IPatientData[];
 }
 
-const AdminList: React.FC<AdminListProps> = ({ data }) => {
+const AdminMenu: React.FC<AdminMenuProps> = ({ data }) => {
   return (
     <div className="mt-4 flex justify-between w-full">
       {' '}
-      <div className="flex flex-col mt-4 w-full">
+      <div className="flex flex-col w-full">
         {data.map((appointmentData, index) => (
           <PatientCard
             data={appointmentData}
@@ -24,4 +24,4 @@ const AdminList: React.FC<AdminListProps> = ({ data }) => {
   );
 };
 
-export default AdminList;
+export default AdminMenu;

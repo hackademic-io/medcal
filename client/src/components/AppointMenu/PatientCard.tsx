@@ -18,7 +18,7 @@ const PatientCard = ({ data, manage, key, showEmail }: IPatientCard) => {
 
   return (
     <div
-      className="flex justify-between items-center border-b-2 pb-4"
+      className="flex justify-between items-center border-b-2 py-4"
       key={key}
     >
       <div className="grid-cols-5 grid gap-4 text-lg text-center items-center">
