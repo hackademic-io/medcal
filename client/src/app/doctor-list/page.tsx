@@ -1,4 +1,4 @@
-import DoctorsList from '@/components/DoctorsList/DoctorsList';
+import DoctorsList from '@/components/UsersLists/DoctorsList';
 import React from 'react';
 
 const DoctorsListPage = () => {

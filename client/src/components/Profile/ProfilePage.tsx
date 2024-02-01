@@ -4,6 +4,7 @@ import { useAuthContext } from '@/context/auth-context';
 import AdminMenu from '../AppointMenu/AdminMenu';
 import PatientMenu from '../AppointMenu/PatientMenu';
 import { IPatientData } from '@/types/user.interface';
+import Link from 'next/link';
 
 const ProfilePage = () => {
   const { user } = useAuthContext();
@@ -50,13 +51,13 @@ const ProfilePage = () => {
       ) : (
         <div className="mt-4 flex justify-between items-center text-xl ">
           <p>
-            Name of the doctor: {user.name} {user.last_name}
+            You logged in as: {user.name} {user.last_name}
           </p>
           <div className="flex gap-6">
             <button className="blue_btn">Set available dates</button>
-            <button className="blue_btn">
+            <Link href={'/patient-list'} className="blue_btn">
               Make an appointment for patient
-            </button>
+            </Link>
           </div>
         </div>
       )}
