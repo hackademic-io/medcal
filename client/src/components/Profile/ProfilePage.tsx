@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NeedToLogIn from '../PrivateRoutes/NeedToLogIn';
 import { useAuthContext } from '@/context/auth-context';
 import AdminMenu from '../AppointMenu/AdminMenu';
 import PatientMenu from '../AppointMenu/PatientMenu';
 import { IPatientData } from '@/types/user.interface';
 import Link from 'next/link';
+import AvailableDatesCal from './AvailableDatesCal';
 
 const ProfilePage = () => {
   const { user } = useAuthContext();
-
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
   const newDate = new Date();
 
   const testPatientsData: IPatientData[] = [
@@ -54,13 +55,21 @@ const ProfilePage = () => {
             You logged in as: {user.name} {user.last_name}
           </p>
           <div className="flex gap-6">
-            <button className="blue_btn">Set available dates</button>
+            <button
+              onClick={() => setShowCalendar(!showCalendar)}
+              className="blue_btn"
+            >
+              Set available dates
+            </button>
             <Link href={'/patient-list'} className="blue_btn">
               Make an appointment for patient
             </Link>
           </div>
         </div>
       )}
+      {showCalendar ? (
+        <AvailableDatesCal setShowCalendar={setShowCalendar} />
+      ) : null}
 
       <h1 className="text-4xl font-bold mt-4">Info about appointments</h1>
       {user.role === 'Patient' ? (

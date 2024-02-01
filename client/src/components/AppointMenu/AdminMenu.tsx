@@ -8,7 +8,7 @@ interface AdminMenuProps {
 
 const AdminMenu: React.FC<AdminMenuProps> = ({ data }) => {
   return (
-    <div className="mt-4 flex justify-between w-full">
+    <div className="mt-4 mb-20 flex justify-between w-full">
       {' '}
       <div className="flex flex-col w-full">
         {data.map((appointmentData, index) => (

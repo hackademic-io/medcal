@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import {
   FieldError,
   FieldErrorsImpl,
@@ -31,6 +32,7 @@ export interface CustomDropdownProps {
   id?: string;
   cytest?: string;
   options: DropdownOptionType[];
+  onChange?: (e: string) => void;
 }
 
 export interface DropdownOptionType {
