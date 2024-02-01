@@ -2,11 +2,11 @@ import React from 'react';
 import PatientCard from './PatientCard';
 import { IPatientData } from '@/types/user.interface';
 
-interface PatientListProps {
+interface PatientMenuProps {
   data: IPatientData[];
 }
 
-const PatientList: React.FC<PatientListProps> = ({ data }) => {
+const PatientMenu: React.FC<PatientMenuProps> = ({ data }) => {
   return (
     <div className="mt-4 flex flex-col w-full">
       <div className="w-full mb-16">
@@ -39,4 +39,4 @@ const PatientList: React.FC<PatientListProps> = ({ data }) => {
   );
 };
 
-export default PatientList;
+export default PatientMenu;
