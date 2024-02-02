@@ -13,7 +13,14 @@ const Dropdown: React.FC<CustomDropdownProps> = ({
   label,
   name,
   id,
+  onChange,
 }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (onChange) {
+      onChange(event.target.value);
+    }
+  };
+
   return (
     <div className="w-full">
       {label && (
@@ -27,8 +34,9 @@ const Dropdown: React.FC<CustomDropdownProps> = ({
             required: required ? `${name} is required` : false,
           })}
           id={id}
-          className="form_input appearance-none"
+          className="form_input appearance-none text-center cursor-pointer"
           data-cy={cytest}
+          onChange={handleChange}
         >
           {options.map((option: DropdownOptionType, index: number) => (
             <option key={option.value}>{option.label}</option>
