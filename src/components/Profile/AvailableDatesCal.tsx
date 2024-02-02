@@ -56,8 +56,10 @@ const AvailableDatesCal: React.FC<IAvalDatesCalProps> = ({
   };
 
   const removeTime = (index: number) => {
-    const removeItem = timeSlots[index];
-    const newTimeSlots = timeSlots.filter((item) => item !== removeItem);
+    const newTimeSlots = [
+      ...timeSlots.slice(0, index),
+      ...timeSlots.slice(index + 1),
+    ];
     setTimeSlots([...newTimeSlots]);
   };
 
