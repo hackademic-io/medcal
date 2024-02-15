@@ -21,6 +21,9 @@ const Nav = () => {
             MedPoint
           </Link>
         )}
+        <a href="/api/auth/logout" className="blue_btn mt-6 w-1/3 h-20">
+          Log out
+        </a>{' '}
       </div>
     </nav>
   );

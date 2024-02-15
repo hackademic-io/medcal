@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import React from 'react';
 
 const MainPage = () => {
@@ -14,9 +13,9 @@ const MainPage = () => {
         </h1>
         <div className="text-3xl flex-col flex items-center justify-center">
           To continue, please{' '}
-          <Link href={'/login'} className="blue_btn mt-6 w-1/3 h-20">
+          <a href="/api/auth/login" className="blue_btn mt-6 w-1/3 h-20">
             Log in
-          </Link>{' '}
+          </a>{' '}
         </div>
       </div>
     </div>

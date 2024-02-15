@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import Nav from '@/components/Nav/Nav';
-const inter = Inter({ subsets: ['latin'] });
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata: Metadata = {
   title: 'MedPoint',
@@ -16,12 +15,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative overflow-x-hidden">
-        <main className="app">
-          <Nav />
-          {children}
-        </main>
-      </body>
+      <UserProvider>
+        {' '}
+        <body className="relative overflow-x-hidden">
+          <main className="app">
+            <Nav />
+            {children}
+          </main>
+        </body>
+      </UserProvider>
     </html>
   );
 }
