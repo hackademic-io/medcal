@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import SideModal from '../UI/Modals/SideModal';
-import NeedToLogIn from '../PrivateRoutes/NeedToLogIn';
 
 const CalendarComponent = () => {
   const currentDate: Date = new Date();
@@ -47,4 +46,4 @@ const CalendarComponent = () => {
   );
 };
 
-export default NeedToLogIn(CalendarComponent);
+export default CalendarComponent;

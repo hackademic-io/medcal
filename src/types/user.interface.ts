@@ -6,12 +6,3 @@ export interface IUser {
   id: string;
   isActivated: boolean;
 }
-
-export interface IPatientData {
-  name: string;
-  last_name: string;
-  date: Date;
-  doctor: string;
-  time: string;
-  email: string;
-}
