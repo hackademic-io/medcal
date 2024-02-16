@@ -31,16 +31,14 @@ const CalendarComponent = () => {
   const submitHandler = async (data: FieldValues) => {
     try {
       const response = await axios.post('/api/appointment', {
-        data: {
-          email: data.email,
-          appointment_id: v4(),
-          first_name: data.first_name,
-          last_name: data.last_name,
-          open_to_earlier: data.open_to_earlier,
-          date,
-          time,
-          booked: true,
-        },
+        email: data.email,
+        appointment_id: v4(),
+        first_name: data.first_name,
+        last_name: data.last_name,
+        open_to_earlier: data.open_to_earlier,
+        date,
+        time,
+        booked: true,
       });
       console.log(response.data);
     } catch (error) {

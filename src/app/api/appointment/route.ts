@@ -6,15 +6,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (req: NextRequest, res: NextApiResponse) => {
   const appointment = await req.json();
 
-  console.log(appointment);
-
   const { accessToken } = await getAccessToken();
 
   try {
     const response = await axios.post(
       `${process.env.AUTH0_AUDIENCE}/appointment`,
+      appointment,
       {
-        data: { ...appointment.data },
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
