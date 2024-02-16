@@ -136,7 +136,7 @@ const SideModal = ({
                 type="submit"
                 disabled={isSubmitting}
               >
-                Confirm
+                {isSubmitting ? 'Loading...' : 'Confirm'}
               </button>
             </form>
           </div>

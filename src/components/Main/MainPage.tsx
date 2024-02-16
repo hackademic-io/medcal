@@ -6,6 +6,7 @@ import React from 'react';
 
 const MainPage = () => {
   const { user } = useUser();
+
   return (
     <div className="h-full flex flex-col justify-center items-center text-center ">
       <div>

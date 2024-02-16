@@ -19,9 +19,9 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
       }
     );
 
-    const appointments = response.data;
+    const newAppointment = response.data;
 
-    return NextResponse.json(appointments);
+    return NextResponse.json(newAppointment);
   } catch (error: any) {
     console.error(error);
     res.status(error.status || 500).json({ message: error.message });

@@ -7,6 +7,7 @@ import SideModal from '../UI/Modals/SideModal';
 import { FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { v4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 const CalendarComponent = () => {
   const currentDate: Date = new Date();
@@ -14,6 +15,7 @@ const CalendarComponent = () => {
   const [date, setDate] = useState<Date>(currentDate);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [time, setTime] = useState<string | null>(null);
+  const router = useRouter();
 
   const minDate = new Date();
 
@@ -32,7 +34,7 @@ const CalendarComponent = () => {
     try {
       const response = await axios.post('/api/appointment', {
         email: data.email,
-        appointment_id: v4(),
+        id: v4(),
         first_name: data.first_name,
         last_name: data.last_name,
         open_to_earlier: data.open_to_earlier,
@@ -40,7 +42,11 @@ const CalendarComponent = () => {
         time,
         booked: true,
       });
-      console.log(response.data);
+      if (response.status >= 200 && response.status < 300) {
+        router.push('/success');
+      } else {
+        console.log('Something went wrong, please retry');
+      }
     } catch (error) {
       console.error('Error creating appointment:', error);
     }

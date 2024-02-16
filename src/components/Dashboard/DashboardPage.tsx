@@ -1,7 +1,16 @@
+import { IAppointmentProps } from '@/types/appointment.interface';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
-const DashboardPage = () => {
+interface IDashboardPageProps {
+  appointments: IAppointmentProps[];
+  loading: boolean;
+}
+
+const DashboardPage: React.FC<IDashboardPageProps> = ({
+  appointments,
+  loading,
+}) => {
   return (
     <div>
       <div>
@@ -13,7 +22,18 @@ const DashboardPage = () => {
 
       <div>
         <h1 className="text-4xl font-bold mt-4">Appointments</h1>
-        <div>List of appointments</div>
+        <div className="mt-4">
+          {loading ? (
+            'Loading...'
+          ) : (
+            <>
+              {' '}
+              {appointments.map((app: IAppointmentProps, index: number) => (
+                <div key={index}>{app.email}</div>
+              ))}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
