@@ -1,11 +1,7 @@
 import { IAppointmentProps } from '@/types/appointment.interface';
+import { IDashboardPageProps } from '@/types/dashboard.interface';
 import Link from 'next/link';
 import React from 'react';
-
-interface IDashboardPageProps {
-  appointments: IAppointmentProps[];
-  loading: boolean;
-}
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({
   appointments,
