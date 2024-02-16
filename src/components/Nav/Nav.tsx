@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
@@ -7,12 +8,11 @@ import React from 'react';
 
 const Nav = () => {
   const pathname = usePathname();
-  const router = useRouter();
-
+  const { user } = useUser();
   return (
-    <nav className="w-full flex justify-between mb-5 mt-5 ">
+    <nav className="w-full flex justify-between items-center mb-5 mt-5 ">
       <div>
-        {pathname === '/' || pathname === '/profile' ? (
+        {pathname === '/' || pathname === '/dashboard' ? (
           <span className="text-4xl font-bold text-blue-600 cursor-default">
             MedPoint
           </span>
@@ -21,10 +21,12 @@ const Nav = () => {
             MedPoint
           </Link>
         )}
-        <a href="/api/auth/logout" className="blue_btn mt-6 w-1/3 h-20">
-          Log out
-        </a>{' '}
       </div>
+      {user ? (
+        <a href="/api/auth/logout" className="blue_btn">
+          Log out
+        </a>
+      ) : null}
     </nav>
   );
 };

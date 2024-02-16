@@ -1,8 +1,11 @@
 'use client';
 
+import { useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 import React from 'react';
 
 const MainPage = () => {
+  const { user } = useUser();
   return (
     <div className="h-full flex flex-col justify-center items-center text-center ">
       <div>
@@ -13,9 +16,15 @@ const MainPage = () => {
         </h1>
         <div className="text-3xl flex-col flex items-center justify-center">
           To continue, please{' '}
-          <a href="/api/auth/login" className="blue_btn mt-6 w-1/3 h-20">
-            Log in
-          </a>{' '}
+          {user ? (
+            <Link href="/dashboard" className="blue_btn mt-6 w-1/3 h-20">
+              Go to profile
+            </Link>
+          ) : (
+            <a href="/api/auth/login" className="blue_btn mt-6 w-1/3 h-20">
+              Log in / Sign up
+            </a>
+          )}{' '}
         </div>
       </div>
     </div>
