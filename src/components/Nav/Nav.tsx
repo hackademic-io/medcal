@@ -1,29 +1,17 @@
 'use client';
 
-import { useAuthContext } from '@/context/auth-context';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import React from 'react';
-import AdminDisplay from './AdminDisplay';
-import PatientDisplay from './PatientDisplay';
 
 const Nav = () => {
-  const { user, logout } = useAuthContext();
   const pathname = usePathname();
-  const router = useRouter();
-
-  let isUserAuth = Object.keys(user).length !== 0;
-
-  async function handleLogOut() {
-    await logout();
-    router.push('/');
-  }
-
+  const { user } = useUser();
   return (
-    <nav className="w-full flex justify-between mb-5 mt-5 ">
+    <nav className="w-full flex justify-between items-center mb-5 mt-5 ">
       <div>
-        {pathname === '/' || pathname === '/profile' ? (
+        {pathname === '/' || pathname === '/dashboard' ? (
           <span className="text-4xl font-bold text-blue-600 cursor-default">
             MedPoint
           </span>
@@ -33,22 +21,11 @@ const Nav = () => {
           </Link>
         )}
       </div>
-      {isUserAuth ? (
-        user.role !== 'Patient' ? (
-          <AdminDisplay handleLogOut={handleLogOut} />
-        ) : (
-          <PatientDisplay handleLogOut={handleLogOut} />
-        )
-      ) : pathname === '/' ? null : (
-        <div className="flex gap-4">
-          <Link href={'/login'} className="outline_btn">
-            Log in
-          </Link>
-          <Link href={'/sign-up'} className="outline_btn">
-            Sign up
-          </Link>
-        </div>
-      )}
+      {user ? (
+        <a href="/api/auth/logout" className="blue_btn">
+          Log out
+        </a>
+      ) : null}
     </nav>
   );
 };

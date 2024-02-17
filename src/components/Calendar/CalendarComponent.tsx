@@ -4,13 +4,18 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import SideModal from '../UI/Modals/SideModal';
-import NeedToLogIn from '../PrivateRoutes/NeedToLogIn';
+import { FieldValues } from 'react-hook-form';
+import axios from 'axios';
+import { v4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 const CalendarComponent = () => {
   const currentDate: Date = new Date();
 
   const [date, setDate] = useState<Date>(currentDate);
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [time, setTime] = useState<string | null>(null);
+  const router = useRouter();
 
   const minDate = new Date();
 
@@ -25,10 +30,39 @@ const CalendarComponent = () => {
     setDate(newDate);
   };
 
+  const submitHandler = async (data: FieldValues) => {
+    try {
+      const response = await axios.post('/api/appointment', {
+        email: data.email,
+        id: v4(),
+        first_name: data.first_name,
+        last_name: data.last_name,
+        open_to_earlier: data.open_to_earlier,
+        date,
+        time,
+        booked: true,
+      });
+      if (response.status >= 200 && response.status < 300) {
+        router.push('/success');
+      } else {
+        console.log('Something went wrong, please retry');
+      }
+    } catch (error) {
+      console.error('Error creating appointment:', error);
+    }
+  };
+
   return (
     <div className="">
       <div className="calendar-container h-full w-full">
-        <SideModal date={date} showMenu={showMenu} setShowMenu={setShowMenu} />
+        <SideModal
+          date={date}
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+          onSubmit={submitHandler}
+          time={time}
+          setTime={setTime}
+        />
         <Calendar
           onChange={handleDateChange}
           value={date}
@@ -47,4 +81,4 @@ const CalendarComponent = () => {
   );
 };
 
-export default NeedToLogIn(CalendarComponent);
+export default CalendarComponent;

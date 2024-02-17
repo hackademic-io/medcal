@@ -1,5 +1,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import CustomInput from '../Input/Input';
+import { FieldValues, useForm } from 'react-hook-form';
 
 const currentDate: Date = new Date();
 
@@ -7,24 +9,41 @@ interface SideModalProps {
   date: Date;
   showMenu: boolean;
   setShowMenu: (date: boolean) => void;
+  onSubmit: (data: FieldValues) => void;
+  time: string | null;
+  setTime: (date: string | null) => void;
 }
 
-const SideModal = ({ showMenu, setShowMenu, date }: SideModalProps) => {
-  const time = ['03:00', '10:00', '15:00', '19:00', '20:30'];
-  const [event, setEvent] = useState(null);
-  const [confirm, setConfirm] = useState(false);
+const SideModal = ({
+  showMenu,
+  setShowMenu,
+  date,
+  onSubmit,
+  time,
+  setTime,
+}: SideModalProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const timeSlots = [
+    '08:00 AM',
+    '9:00 AM',
+    '10:00 AM',
+    '01:00 PM',
+    '02:00 PM',
+    '03:00 PM',
+  ];
+
   const router = useRouter();
 
   function display(e: any) {
     const buttonText = e?.target?.innerText ?? '';
 
-    setEvent(buttonText);
-    setConfirm(false);
+    setTime(buttonText);
   }
-
-  const submitHandler = () => {
-    return router.push('/success');
-  };
 
   return (
     <>
@@ -40,13 +59,13 @@ const SideModal = ({ showMenu, setShowMenu, date }: SideModalProps) => {
         >
           Go Back
         </button>
-        <h2 className="text-4xl font-bold mt-20">
+        <h2 className="text-4xl font-bold mt-4">
           {' '}
           Available time on: <br /> {date.toDateString()}
         </h2>
-        <h3 className="text-3xl font-semibold my-3">Doctor 1</h3>
-        <div className="grid grid-cols-3 gap-4 mb-4">
-          {time.map((times, index) => {
+
+        <div className="grid grid-cols-3 gap-4 mb-4 mt-4">
+          {timeSlots.map((times, index) => {
             return (
               <button
                 key={index}
@@ -59,32 +78,67 @@ const SideModal = ({ showMenu, setShowMenu, date }: SideModalProps) => {
           })}
         </div>
 
-        {event ? (
-          <>
-            <p className="text-xl">
-              Selected time: <span className="font-bold">{event}</span>
+        {time ? (
+          <div>
+            <p className="text-xl mb-4">
+              Selected time: <span className="font-bold">{time}</span>
             </p>{' '}
-            <button
-              onClick={() => setConfirm(true)}
-              className="outline_btn mt-2"
-            >
-              Yes, select this time
-            </button>
-          </>
-        ) : null}
-
-        {confirm ? (
-          <div className="text-xl mt-3">
-            <p className="mb-2">Please confirm the info: </p>
-            <p>
-              Date: <span className="font-bold">{date.toDateString()}</span>
-            </p>
-            <p className="mb-2">
-              Time: <span className="font-bold">{event}</span>
-            </p>
-            <button className="submit_btn" onClick={submitHandler}>
-              Confirm
-            </button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {' '}
+              <CustomInput
+                label="Email address"
+                placeholder="Email"
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                register={register}
+                errors={errors.email}
+                required={true}
+                cytest="auth-email"
+              />
+              <div className="flex gap-6 mt-4">
+                <CustomInput
+                  label="First Name"
+                  placeholder="First Name"
+                  name="first_name"
+                  type="text"
+                  register={register}
+                  errors={errors?.first_name}
+                  required={true}
+                  cytest="first-name-input"
+                />
+                <CustomInput
+                  label="Last Name"
+                  placeholder="Last Name"
+                  name="last_name"
+                  type="text"
+                  register={register}
+                  errors={errors?.last_name}
+                  required={true}
+                  cytest="last-name-input"
+                />
+              </div>
+              <div className="flex mt-4 items-center">
+                <input
+                  type="checkbox"
+                  id="open_to_earlier"
+                  className=" mr-4 w-7 h-7 cursor-pointer"
+                  {...register('open_to_earlier')}
+                />
+                <label className="text-lg">
+                  Does the patient wish to inquire about the availability of the
+                  earliest date?
+                </label>
+              </div>
+              <button
+                className="submit_btn mt-4"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Loading...' : 'Confirm'}
+              </button>
+            </form>
           </div>
         ) : null}
       </div>
