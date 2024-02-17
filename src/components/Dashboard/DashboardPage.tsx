@@ -2,10 +2,12 @@ import { IAppointmentProps } from '@/types/appointment.interface';
 import { IDashboardPageProps } from '@/types/dashboard.interface';
 import Link from 'next/link';
 import React from 'react';
+import AppointmentCard from './AppointmentCard';
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({
   appointments,
   loading,
+  deleteAppointment,
 }) => {
   return (
     <div>
@@ -22,12 +24,22 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({
           {loading ? (
             'Loading...'
           ) : (
-            <>
-              {' '}
+            <div className="mb-4">
+              <div className="grid grid-cols-[1fr_1fr_1.5fr_1fr_1fr_1fr] mb-2 text-xl font-semibold">
+                <p>Fisrt name</p>
+                <p>Last Name</p>
+                <p>Email</p>
+                <p>Date</p>
+                <p>Time</p>
+              </div>
               {appointments.map((app: IAppointmentProps, index: number) => (
-                <div key={index}>{app.email}</div>
+                <AppointmentCard
+                  data={app}
+                  index={index}
+                  deleteAppointment={deleteAppointment}
+                />
               ))}
-            </>
+            </div>
           )}
         </div>
       </div>

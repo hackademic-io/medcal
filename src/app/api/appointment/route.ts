@@ -49,3 +49,29 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
     res.status(error.status || 500).json({ message: error.message });
   }
 };
+
+export const DELETE = async (req: NextRequest, res: NextApiResponse) => {
+  const appointmentId = await req.json();
+
+  console.log(appointmentId.id);
+
+  const { accessToken } = await getAccessToken();
+
+  try {
+    const response = await axios.delete(
+      `${process.env.AUTH0_AUDIENCE}/appointment/${appointmentId.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const deletedAppointmentId = response.data;
+
+    return NextResponse.json(deletedAppointmentId);
+  } catch (error: any) {
+    console.error(error);
+    res.status(error.status || 500).json({ message: error.message });
+  }
+};
