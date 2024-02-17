@@ -11,7 +11,7 @@ const Profile = () => {
 
   useEffect(() => {
     getAllAppointments();
-  }, [appointments]);
+  }, []);
 
   async function getAllAppointments() {
     try {
@@ -31,8 +31,6 @@ const Profile = () => {
 
       if (response && response.data) {
         const deletedAppointmentId = response.data.id;
-
-        console.log(deletedAppointmentId);
 
         const newAppointmentList = appointments.filter(
           (appointment) => appointment.id !== deletedAppointmentId

@@ -8,6 +8,5 @@ export interface IDashboardPageProps {
 
 export interface IAppointmentCardProps {
   data: IAppointmentProps;
-  index: number;
   deleteAppointment: (id: string) => void;
 }

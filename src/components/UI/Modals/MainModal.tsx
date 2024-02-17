@@ -1,44 +1,43 @@
+import { IMainModalProps } from '@/types/modal.interface';
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 
-interface MainModalProps {
-  showMenu: boolean;
-  setShowMenu: (date: boolean) => void;
-}
-
-const MainModal: React.FC<MainModalProps> = ({ showMenu, setShowMenu }) => {
-  const router = useRouter();
-
-  const submitHandler = () => {
-    return router.push('/cancel');
-  };
-
+const MainModal: React.FC<IMainModalProps> = ({
+  showMenu,
+  setShowMenu,
+  deleteAppointment,
+  appointmentId,
+}) => {
   return (
     <>
       {' '}
-      <div className="">
+      <div>
         <div
           className={`absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 flex-col items-center bg-white p-12 transition-all duration-300 z-20 ${
             showMenu ? ' translate-x-0' : 'translate-x-full'
           }`}
         >
           <button
-            onClick={(e) => setShowMenu(false)}
+            onClick={(e) => setShowMenu(!showMenu)}
             className="text-xl font-semibold transition-all hover:opacity-70"
           >
             Go Back
           </button>
-          <div className="text-4xl font-bold my-6">
+          <div className="text-4xl font-bold my-16">
             Are you sure that you want to cancel this appointment?
-            <br /> You can&apos;t return this time slot,
-            <br /> and it&apos;s going to be offered to another client.
           </div>
           <div className="flex gap-6">
-            <Link href={'/cancel'} className="blue_btn">
+            <button
+              onClick={() => {
+                deleteAppointment(appointmentId);
+              }}
+              className="blue_btn "
+            >
               Yes, i want to cancel
-            </Link>
-            <button onClick={(e) => setShowMenu(false)} className="cancel_btn">
+            </button>
+            <button
+              onClick={(e) => setShowMenu(!showMenu)}
+              className="cancel_btn"
+            >
               I changed my mind.
             </button>
           </div>
