@@ -1,20 +1,20 @@
 # Auth0 Installation Guide
 
-Follow these steps to set up Auth0 authentication in your Express.js application.
+Follow these steps to set up Auth0 authentication in your Next.js application.
 
-## 1. Set Up Frontend Part of Auth0
+## 1. Create an Auth0 Account
 
-Visit [Medcal-frontend](https://github.com/hackademic-io/medcal-frontend) and follow the instructions in the README file.
+Visit [Auth0](https://auth0.com/) and sign up for an account if you haven't already.
 
 ## 2. Create a New Application
 
-- Navigate to Applications => APIs.
-- Click 'Create API'.
-- Enter the name of the API; the identifier should be 'http://localhost:3001', and the algorithm should be RS256.
+- Navigate to Applications => Applications.
+- Click 'Create Application'.
+- Choose 'Regular Web Applications' and select 'Next.js'.
 
 ## 3. Install Dependencies
 
-Ensure you have all necessary dependencies installed by running:
+Make sure to install all necessary dependencies by running:
 
 ```bash
 npm i
@@ -22,20 +22,28 @@ npm i
 
 ## 4. Configure Environment Variables
 
-Create a `.env` file in the root directory of your project and add the following properties:
+Create a `.env.local` file in the root directory of your project and add the following properties:
 
 ```plaintext
-ISSUER_URL='https://[Copy link from the dashboard page's 'Settings' property Domain (From Frontend Application)]'
-AUTH0_AUDIENCE='http://localhost:3001'
+AUTH0_SECRET='use [openssl rand -hex 32] to generate a 32-byte value'
 AUTH0_BASE_URL='http://localhost:3000'
+AUTH0_ISSUER_BASE_URL='https://[Copy link from the dashboard page's 'Settings' property Domain]'
+AUTH0_CLIENT_ID='[Copy link from the dashboard page's 'Settings' property Client ID]'
+AUTH0_CLIENT_SECRET='[Copy link from the dashboard page's 'Settings' property Client Secret]'
 ```
 
-## 5. Start and Test
+## 5. Configure Application URIs
 
-To begin, open the development server and test the API route by sending a GET request to `/appointment`:
+- Open the 'Settings' tab in your Auth0 dashboard.
+- Go to Application URIs.
+- Set 'Allowed Callback URLs' to 'http://localhost:3000/api/auth/callback'.
+- Set 'Allowed Logout URLs' to 'http://localhost:3000'.
+- Set 'Allowed Web Origins' to 'http://localhost:3000, http://localhost:3001'.
+
+## 6. Start and Test
+
+Run the following command to open the development server and test the login button:
 
 ```bash
 npm run dev
 ```
-
-Expect to receive an unauthorized error at this stage. Next, navigate to the frontend part of the application and also run npm run dev there. Attempt to schedule an appointment. Finally, visit the /dashboard page, where you should be able to view your appointment.
