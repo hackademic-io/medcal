@@ -33,7 +33,7 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
 
   try {
     const response = await axios.get(
-      `${process.env.AUTH0_AUDIENCE}/appointment`,
+      `${process.env.AUTH0_AUDIENCE}/appointments`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
