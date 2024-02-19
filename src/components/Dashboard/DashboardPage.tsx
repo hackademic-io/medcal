@@ -1,14 +1,28 @@
+'use client';
+
 import { IAppointmentProps } from '@/types/appointment.interface';
 import { IDashboardPageProps } from '@/types/dashboard.interface';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import AppointmentCard from './AppointmentCard';
+import MainModal from '../UI/Modals/MainModal';
+import { useDisableBodyScroll } from '@/hooks/useDisableBodyScroll';
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({
   appointments,
   loading,
   deleteAppointment,
 }) => {
+  const [showMenu, setShowMenu] = useState(false);
+  const [appointmentId, setAppointmentId] = useState('');
+
+  useDisableBodyScroll(showMenu);
+
+  const deleteButton = (id: string) => {
+    setAppointmentId(id);
+    setShowMenu(true);
+  };
+
   return (
     <div>
       <div>
@@ -24,7 +38,7 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({
           {loading ? (
             'Loading...'
           ) : (
-            <div className="mb-4">
+            <div className="mb-4 ">
               <div className="grid grid-cols-[1fr_1fr_1.5fr_1fr_1fr_1fr] mb-2 text-xl font-semibold">
                 <p>Fisrt name</p>
                 <p>Last Name</p>
@@ -32,17 +46,25 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({
                 <p>Date</p>
                 <p>Time</p>
               </div>
-              {appointments.map((app: IAppointmentProps, index: number) => (
+              {appointments.map((app: IAppointmentProps) => (
                 <AppointmentCard
+                  key={app.id}
                   data={app}
-                  index={index}
-                  deleteAppointment={deleteAppointment}
+                  deleteAppointment={deleteButton}
                 />
               ))}
             </div>
           )}
         </div>
       </div>
+      {showMenu ? (
+        <MainModal
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+          appointmentId={appointmentId}
+          deleteAppointment={deleteAppointment}
+        />
+      ) : null}
     </div>
   );
 };

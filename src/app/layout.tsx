@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <UserProvider>
         {' '}
-        <body className="relative overflow-x-hidden">
+        <body className="relative">
           <main className="app">
             <Nav />
             {children}

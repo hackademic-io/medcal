@@ -1,43 +1,40 @@
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
 import CustomInput from '../Input/Input';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { IAppointmentProps } from '@/types/appointment.interface';
+import { SideModalProps } from '@/types/modal.interface';
 
 const currentDate: Date = new Date();
 
-interface SideModalProps {
-  date: Date;
-  showMenu: boolean;
-  setShowMenu: (date: boolean) => void;
-  onSubmit: (data: FieldValues) => void;
-  time: string | null;
-  setTime: (date: string | null) => void;
-}
-
-const SideModal = ({
+const SideModal: React.FC<SideModalProps> = ({
   showMenu,
   setShowMenu,
   date,
   onSubmit,
   time,
   setTime,
-}: SideModalProps) => {
+  appointments,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const isAvailable = (timeSlot: string) => {
+    return !appointments.some(
+      (appointment: IAppointmentProps) => appointment.time === timeSlot
+    );
+  };
+
   const timeSlots = [
     '08:00 AM',
-    '9:00 AM',
+    '09:00 AM',
     '10:00 AM',
     '01:00 PM',
     '02:00 PM',
     '03:00 PM',
   ];
-
-  const router = useRouter();
 
   function display(e: any) {
     const buttonText = e?.target?.innerText ?? '';
@@ -66,11 +63,14 @@ const SideModal = ({
 
         <div className="grid grid-cols-3 gap-4 mb-4 mt-4">
           {timeSlots.map((times, index) => {
+            const isDisabled = !isAvailable(times);
             return (
               <button
                 key={index}
-                className=" border-blue-600  border-2 flex justify-center p-3 focus:bg-blue-600 focus:text-white rounded-xl"
+                className={`border-blue-600 border-2 flex justify-center p-3 focus:bg-blue-600 focus:text-white rounded-xl 
+                  disabled:bg-gray-300 disabled:border-gray-600 `}
                 onClick={(e) => display(e)}
+                disabled={isDisabled}
               >
                 {times}{' '}
               </button>

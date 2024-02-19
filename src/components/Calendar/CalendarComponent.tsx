@@ -8,8 +8,17 @@ import { FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { v4 } from 'uuid';
 import { useRouter } from 'next/navigation';
+import { IAppointmentProps } from '@/types/appointment.interface';
 
-const CalendarComponent = () => {
+interface ICalendarComponentProps {
+  appointments: IAppointmentProps[];
+  disabledDates: string[];
+}
+
+const CalendarComponent: React.FC<ICalendarComponentProps> = ({
+  appointments,
+  disabledDates,
+}) => {
   const currentDate: Date = new Date();
 
   const [date, setDate] = useState<Date>(currentDate);
@@ -23,7 +32,14 @@ const CalendarComponent = () => {
   maxDate.setMonth(minDate.getMonth() + 2);
 
   const tileDisabled = ({ date }: { date: Date }) => {
-    return date < minDate || date > maxDate;
+    return (
+      date < minDate ||
+      date > maxDate ||
+      disabledDates.some((appointment: string) => {
+        const appointmentDate = new Date(appointment);
+        return appointmentDate.getDate() === date.getDate();
+      })
+    );
   };
 
   const handleDateChange = (newDate: any) => {
@@ -52,9 +68,13 @@ const CalendarComponent = () => {
     }
   };
 
+  const appointmentsForSpecificDate = appointments.filter(
+    (app: IAppointmentProps) => new Date(app.date).getDate() === date.getDate()
+  );
+
   return (
     <div className="">
-      <div className="calendar-container h-full w-full">
+      <div className="calendar-container h-full w-full overflow-x-hidden">
         <SideModal
           date={date}
           showMenu={showMenu}
@@ -62,6 +82,7 @@ const CalendarComponent = () => {
           onSubmit={submitHandler}
           time={time}
           setTime={setTime}
+          appointments={appointmentsForSpecificDate}
         />
         <Calendar
           onChange={handleDateChange}
@@ -69,14 +90,10 @@ const CalendarComponent = () => {
           maxDate={maxDate}
           minDate={minDate}
           tileDisabled={tileDisabled}
-          onClickDay={(e) => setShowMenu(true)}
+          onClickDay={(e) => setShowMenu(!showMenu)}
           locale="en-GB"
         />
       </div>
-      <p className="text-center mt-6">
-        <span className="bold ">Selected Date:</span>{' '}
-        {date ? date.toDateString() : 'none'}
-      </p>
     </div>
   );
 };

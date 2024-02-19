@@ -53,8 +53,6 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
 export const DELETE = async (req: NextRequest, res: NextApiResponse) => {
   const appointmentId = await req.json();
 
-  console.log(appointmentId.id);
-
   const { accessToken } = await getAccessToken();
 
   try {
