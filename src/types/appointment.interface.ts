@@ -6,5 +6,5 @@ export interface IAppointmentProps {
   open_to_earlier: boolean;
   date: Date;
   time: string;
-  booked: boolean;
+  booked: string;
 }
