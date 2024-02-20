@@ -1,5 +1,6 @@
 'use client';
 
+import ClientError from '@/components/ClientError/ClientError';
 import LoadingPage from '@/components/Loading/LoadingPage';
 import RedirectFromEmail from '@/components/RedirectFromEmail/FormFromEmail';
 import axios from 'axios';
@@ -18,31 +19,27 @@ export default function Page({ params }: { params: { id: string } }) {
       const response = await axios.put(`/api/appointment/${params.id}`, {
         status: 'CONFIRMED',
       });
-      const data = await response.data;
-      if (response.status === 200) {
-        setLoading(false);
-      } else {
-        throw new Error('Unexpected response status');
-      }
-    } catch (error) {
-      console.error(error);
-      setError('Error confirming appointment');
+
       setLoading(false);
+    } catch (error: any) {
+      console.error(error.response.data.error);
+      setLoading(false);
+      setError(error.response.data.error);
     }
   }
 
+  if (loading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    return <ClientError error={error} />;
+  }
+
   return (
-    <>
-      {loading ? (
-        <LoadingPage />
-      ) : error ? (
-        <div>{error}</div>
-      ) : (
-        <RedirectFromEmail
-          message={'Your appointment is confirmed! See you soon!'}
-          appointmentId={params.id}
-        />
-      )}
-    </>
+    <RedirectFromEmail
+      message={'Your appointment is confirmed! See you soon!'}
+      appointmentId={params.id}
+    />
   );
 }

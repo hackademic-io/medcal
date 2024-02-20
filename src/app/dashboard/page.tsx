@@ -25,9 +25,7 @@ const Profile = () => {
 
   async function deleteAppointment(id: string) {
     try {
-      const response = await axios.delete('/api/appointment', {
-        data: { id },
-      });
+      const response = await axios.delete(`/api/appointment/${id}`);
 
       if (response && response.data) {
         const deletedAppointmentId = response.data.id;

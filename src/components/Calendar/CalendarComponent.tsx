@@ -9,27 +9,19 @@ import axios from 'axios';
 import { v4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import { IAppointmentProps } from '@/types/appointment.interface';
-
-interface ICalendarComponentProps {
-  appointments: IAppointmentProps[];
-  disabledDates: string[];
-}
+import { ICalendarComponentProps } from '@/types/calendar.interface';
 
 const CalendarComponent: React.FC<ICalendarComponentProps> = ({
   appointments,
   disabledDates,
+  date,
+  setDate,
+  maxDate,
+  minDate,
 }) => {
-  const currentDate: Date = new Date();
-
-  const [date, setDate] = useState<Date>(currentDate);
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [time, setTime] = useState<string | null>(null);
   const router = useRouter();
-
-  const minDate = new Date();
-
-  const maxDate = new Date();
-  maxDate.setMonth(minDate.getMonth() + 2);
 
   const tileDisabled = ({ date }: { date: Date }) => {
     return (

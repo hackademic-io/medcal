@@ -25,6 +25,36 @@ export const PUT = async (req: NextRequest, { params }: any) => {
     return NextResponse.json(appointmentInfo);
   } catch (error: any) {
     console.error(error);
-    NextResponse.json({ message: error.message });
+    return NextResponse.json(
+      { error: error.response.data.error },
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (req: NextRequest, { params }: any) => {
+  const { id } = params;
+
+  const { accessToken } = await getAccessToken();
+
+  try {
+    const response = await axios.delete(
+      `${process.env.AUTH0_AUDIENCE}/appointment/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const deletedAppointmentId = response.data;
+
+    return NextResponse.json(deletedAppointmentId);
+  } catch (error: any) {
+    console.error(error);
+    return NextResponse.json(
+      { error: error.response.data.error },
+      { status: 500 }
+    );
   }
 };
