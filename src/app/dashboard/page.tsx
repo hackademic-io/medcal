@@ -9,13 +9,20 @@ const Profile = () => {
   const [appointments, setAppointments] = useState<IAppointmentProps[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const maxDate = new Date();
+  const minDate = new Date();
+
+  maxDate.setMonth(minDate.getMonth() + 1);
+
   useEffect(() => {
     getAllAppointments();
   }, []);
 
   async function getAllAppointments() {
     try {
-      const response = await axios.get('/api/appointment');
+      const response = await axios.get(
+        `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+      );
       setAppointments(response.data);
       setLoading(false);
     } catch (error) {
