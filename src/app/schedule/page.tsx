@@ -4,10 +4,19 @@ import React, { useEffect, useState } from 'react';
 import CalendarComponent from '@/components/Calendar/CalendarComponent';
 import axios from 'axios';
 import { IAppointmentProps } from '@/types/appointment.interface';
+import checkDisabledDates from '@/utils/checkDisabledDates';
 
 const Schedule = () => {
+  const currentDate: Date = new Date();
+
+  const [date, setDate] = useState<Date>(currentDate);
   const [appointments, setAppointments] = useState<IAppointmentProps[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const maxDate = new Date();
+  const minDate = new Date();
+
+  maxDate.setMonth(minDate.getMonth() + 1);
 
   useEffect(() => {
     getAllAppointments();
@@ -15,7 +24,9 @@ const Schedule = () => {
 
   async function getAllAppointments() {
     try {
-      const response = await axios.get('/api/appointment');
+      const response = await axios.get(
+        `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+      );
       setAppointments(response.data);
       setLoading(false);
     } catch (error) {
@@ -23,37 +34,8 @@ const Schedule = () => {
     }
   }
 
-  const checkDisabledDates = () => {
-    const disabledDates = new Set();
+  const disabledDates = checkDisabledDates(appointments);
 
-    appointments.forEach(({ date }) => {
-      if (!disabledDates.has(date)) {
-        const appointmentsForDate = appointments.filter(
-          (appointment) => appointment.date === date
-        );
-
-        const bookedTimesCount = appointmentsForDate.reduce(
-          (count, appointment) => {
-            if (appointment.time) {
-              return count + 1;
-            }
-            return count;
-          },
-          0
-        );
-
-        if (bookedTimesCount === 6) {
-          disabledDates.add(date);
-        }
-      }
-    });
-
-    const uniqueDisabledDates = Array.from(disabledDates);
-
-    return uniqueDisabledDates as string[];
-  };
-
-  const disabledDates = checkDisabledDates();
   return (
     <div className="h-full ">
       {loading ? (
@@ -62,6 +44,10 @@ const Schedule = () => {
         <CalendarComponent
           appointments={appointments}
           disabledDates={disabledDates}
+          date={date}
+          setDate={setDate}
+          maxDate={maxDate}
+          minDate={minDate}
         />
       )}
     </div>
