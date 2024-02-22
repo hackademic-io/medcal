@@ -16,9 +16,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   async function sendConfirmRequest() {
     try {
-      const response = await axios.put(`/api/appointment/${params.id}`, {
-        status: 'CONFIRMED',
-      });
+      const response = await axios.put(`/api/appointment/confirm/${params.id}`);
 
       setLoading(false);
     } catch (error: any) {
