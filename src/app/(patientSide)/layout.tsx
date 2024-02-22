@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import '../styles/globals.css';
-import Nav from '@/components/Nav/Nav';
+import '../../styles/globals.css';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata: Metadata = {
@@ -19,7 +18,11 @@ export default function RootLayout({
         {' '}
         <body className="relative">
           <main className="app">
-            <Nav />
+            <nav className="w-full flex justify-center items-center mb-5 mt-5 ">
+              <span className="text-4xl font-bold text-blue-600 cursor-default">
+                MedPoint
+              </span>
+            </nav>
             {children}
           </main>
         </body>
