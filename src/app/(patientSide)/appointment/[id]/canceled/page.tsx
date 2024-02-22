@@ -8,18 +8,15 @@ import React, { useEffect, useState } from 'react';
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
-    sendConfirmRequest();
+    sendCancelRequest();
   }, []);
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function sendConfirmRequest() {
+  async function sendCancelRequest() {
     try {
-      const response = await axios.put(`/api/appointment/${params.id}`, {
-        status: 'CONFIRMED',
-      });
-
+      const response = await axios.delete(`/api/appointment/${params.id}`);
       setLoading(false);
     } catch (error: any) {
       console.error(error.response.data.error);
@@ -38,8 +35,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <RedirectFromEmail
-      message={'Your appointment is confirmed! See you soon!'}
-      appointmentId={params.id}
+      message={'Your appointment is canceled! Have a great day!'}
     />
   );
 }
