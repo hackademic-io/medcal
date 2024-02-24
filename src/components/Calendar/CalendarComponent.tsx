@@ -48,6 +48,7 @@ const CalendarComponent: React.FC<ICalendarComponentProps> = ({
         open_to_earlier: data.open_to_earlier,
         date,
         time,
+        isPending: false,
         status: 'BOOKED',
       });
       if (response.status >= 200 && response.status < 300) {
