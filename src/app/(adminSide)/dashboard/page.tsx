@@ -50,11 +50,16 @@ const Profile = () => {
   }
   return (
     <>
-      <DashboardPage
-        appointments={appointments}
-        loading={loading}
-        deleteAppointment={deleteAppointment}
-      />
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <DashboardPage
+          setAppointments={setAppointments}
+          appointments={appointments}
+          loading={loading}
+          deleteAppointment={deleteAppointment}
+        />
+      )}
     </>
   );
 };

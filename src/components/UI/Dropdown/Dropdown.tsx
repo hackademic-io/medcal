@@ -14,9 +14,11 @@ const Dropdown: React.FC<CustomDropdownProps> = ({
   name,
   id,
   onChange,
+  className,
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {
+      console.log(event.target.value);
       onChange(event.target.value);
     }
   };
@@ -30,11 +32,15 @@ const Dropdown: React.FC<CustomDropdownProps> = ({
       )}
       <div>
         <select
-          {...register(name, {
-            required: required ? `${name} is required` : false,
-          })}
+          {...(register
+            ? {
+                ...register(name, {
+                  required: required ? `${name} is required` : false,
+                }),
+              }
+            : null)}
           id={id}
-          className="form_input appearance-none text-center cursor-pointer"
+          className={`form_input appearance-none text-center cursor-pointer ${className}`}
           data-cy={cytest}
           onChange={handleChange}
         >
