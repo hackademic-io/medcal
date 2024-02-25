@@ -5,6 +5,7 @@ import CalendarComponent from '@/components/Calendar/CalendarComponent';
 import axios from 'axios';
 import { IAppointmentProps } from '@/types/appointment.interface';
 import checkDisabledDates from '@/utils/checkDisabledDates';
+import AuthRequired from '@/components/Routes/AuthRequired';
 
 const Schedule = () => {
   const currentDate: Date = new Date();
@@ -54,4 +55,4 @@ const Schedule = () => {
   );
 };
 
-export default Schedule;
+export default AuthRequired(Schedule);

@@ -9,6 +9,8 @@ const Nav = () => {
   const pathname = usePathname();
   const { user } = useUser();
 
+  const redirectLink = user ? '/dashboard' : '/';
+
   return (
     <nav className="w-full flex justify-between items-center mb-5 mt-5 ">
       <div>
@@ -17,7 +19,10 @@ const Nav = () => {
             MedPoint
           </span>
         ) : (
-          <Link className="text-4xl font-bold text-blue-600" href={'/'}>
+          <Link
+            className="text-4xl font-bold text-blue-600"
+            href={redirectLink}
+          >
             MedPoint
           </Link>
         )}

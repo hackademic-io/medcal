@@ -1,6 +1,7 @@
 'use client';
 
 import DashboardPage from '@/components/Dashboard/DashboardPage';
+import AuthRequired from '@/components/Routes/AuthRequired';
 import { IAppointmentProps } from '@/types/appointment.interface';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -58,4 +59,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default AuthRequired(Profile);
