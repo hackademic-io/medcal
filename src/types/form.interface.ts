@@ -27,11 +27,12 @@ export interface CustomDropdownProps {
   label?: string;
   name: string;
   errors?: FieldError | Merge<FieldError, FieldErrorsImpl>;
-  register: UseFormRegister<FieldValues>;
-  required: boolean;
+  register?: UseFormRegister<FieldValues>;
+  required?: boolean;
   id?: string;
   cytest?: string;
   options: DropdownOptionType[];
+  className?: string;
   onChange?: (e: string) => void;
 }
 

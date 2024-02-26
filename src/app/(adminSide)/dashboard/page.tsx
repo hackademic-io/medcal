@@ -1,6 +1,7 @@
 'use client';
 
 import DashboardPage from '@/components/Dashboard/DashboardPage';
+import AuthRequired from '@/components/Routes/AuthRequired';
 import { IAppointmentProps } from '@/types/appointment.interface';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -49,13 +50,18 @@ const Profile = () => {
   }
   return (
     <>
-      <DashboardPage
-        appointments={appointments}
-        loading={loading}
-        deleteAppointment={deleteAppointment}
-      />
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <DashboardPage
+          setAppointments={setAppointments}
+          appointments={appointments}
+          loading={loading}
+          deleteAppointment={deleteAppointment}
+        />
+      )}
     </>
   );
 };
 
-export default Profile;
+export default AuthRequired(Profile);
