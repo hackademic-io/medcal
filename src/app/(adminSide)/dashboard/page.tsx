@@ -2,64 +2,35 @@
 
 import DashboardPage from '@/components/Dashboard/DashboardPage';
 import AuthRequired from '@/components/Routes/AuthRequired';
-import { IAppointmentProps } from '@/types/appointment.interface';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const Profile = () => {
-  const [appointments, setAppointments] = useState<IAppointmentProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
   const maxDate = new Date();
   const minDate = new Date();
 
   maxDate.setMonth(minDate.getMonth() + 1);
 
-  useEffect(() => {
-    getAllAppointments();
-  }, []);
-
   async function getAllAppointments() {
-    try {
-      const response = await axios.get(
-        `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
-      );
-      setAppointments(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    const { data } = await axios.get(
+      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+    );
+
+    return data;
   }
 
-  async function deleteAppointment(id: string) {
-    try {
-      const response = await axios.delete(`/api/appointment/${id}`);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ['appointments'],
+    queryFn: getAllAppointments,
+  });
 
-      if (response && response.data) {
-        const deletedAppointmentId = response.data.id;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>There was an error with getting appointments</div>;
 
-        const newAppointmentList = appointments.filter(
-          (appointment) => appointment.id !== deletedAppointmentId
-        );
-
-        setAppointments(newAppointmentList);
-      }
-    } catch (error) {
-      console.error('Error deleting appointment:', error);
-    }
-  }
   return (
     <>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <DashboardPage
-          setAppointments={setAppointments}
-          appointments={appointments}
-          loading={loading}
-          deleteAppointment={deleteAppointment}
-        />
-      )}
+      <DashboardPage data={data} loading={isLoading} />
     </>
   );
 };

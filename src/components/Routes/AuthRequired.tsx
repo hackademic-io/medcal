@@ -10,17 +10,11 @@ function AuthRequired(Component: any) {
     const router = useRouter();
 
     if (isLoading) {
-      return <></>;
+      return <>Loading...</>;
     }
 
-    useEffect(() => {
-      if (!user) {
-        router.push('/');
-      }
-    }, [user]);
-
     if (!user) {
-      return null;
+      router.push('/');
     }
 
     return <Component {...props} />;

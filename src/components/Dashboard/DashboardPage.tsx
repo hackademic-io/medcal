@@ -9,14 +9,10 @@ import MainModal from '../UI/Modals/MainModal';
 import { useDisableBodyScroll } from '@/hooks/useDisableBodyScroll';
 import Dropdown from '../UI/Dropdown/Dropdown';
 
-const DashboardPage: React.FC<IDashboardPageProps> = ({
-  appointments,
-  loading,
-  deleteAppointment,
-  setAppointments,
-}) => {
+const DashboardPage: React.FC<IDashboardPageProps> = ({ data, loading }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [appointmentId, setAppointmentId] = useState('');
+  const [appointments, setAppointments] = useState(data);
 
   useDisableBodyScroll(showMenu);
 
@@ -108,7 +104,6 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({
           showMenu={showMenu}
           setShowMenu={setShowMenu}
           appointmentId={appointmentId}
-          deleteAppointment={deleteAppointment}
         />
       ) : null}
     </div>
