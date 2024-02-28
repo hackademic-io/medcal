@@ -17,6 +17,9 @@ const MainModal: React.FC<IMainModalProps> = ({
       queryClient.invalidateQueries({ queryKey: ['appointments'] });
       setShowMenu(!showMenu);
     },
+    onError: (err) => {
+      console.error('Error deleting appointment :', err);
+    },
   });
 
   return (

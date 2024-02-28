@@ -11,7 +11,7 @@ export interface SideModalProps {
   date: Date;
   showMenu: boolean;
   setShowMenu: (date: boolean) => void;
-  onSubmit: (data: FieldValues) => void;
+
   time: string | null;
   setTime: (date: string | null) => void;
   appointments: IAppointmentProps[];

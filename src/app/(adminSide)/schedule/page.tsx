@@ -1,56 +1,48 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CalendarComponent from '@/components/Calendar/CalendarComponent';
 import axios from 'axios';
-import { IAppointmentProps } from '@/types/appointment.interface';
 import checkDisabledDates from '@/utils/checkDisabledDates';
 import AuthRequired from '@/components/Routes/AuthRequired';
+import { useQuery } from '@tanstack/react-query';
 
 const Schedule = () => {
-  const currentDate: Date = new Date();
-
-  const [date, setDate] = useState<Date>(currentDate);
-  const [appointments, setAppointments] = useState<IAppointmentProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const maxDate = new Date();
   const minDate = new Date();
+  const maxDate = new Date();
 
   maxDate.setMonth(minDate.getMonth() + 1);
 
-  useEffect(() => {
-    getAllAppointments();
-  }, []);
+  const [date, setDate] = useState<Date>(minDate);
 
   async function getAllAppointments() {
-    try {
-      const response = await axios.get(
-        `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
-      );
-      setAppointments(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    const { data } = await axios.get(
+      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+    );
+
+    return data;
   }
 
-  const disabledDates = checkDisabledDates(appointments);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ['appointments'],
+    queryFn: getAllAppointments,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>There was an error with getting appointments</div>;
+
+  const disabledDates = checkDisabledDates(data);
 
   return (
     <div className="h-full ">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <CalendarComponent
-          appointments={appointments}
-          disabledDates={disabledDates}
-          date={date}
-          setDate={setDate}
-          maxDate={maxDate}
-          minDate={minDate}
-        />
-      )}
+      <CalendarComponent
+        data={data}
+        disabledDates={disabledDates}
+        date={date}
+        setDate={setDate}
+        maxDate={maxDate}
+        minDate={minDate}
+      />
     </div>
   );
 };

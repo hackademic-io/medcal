@@ -9,7 +9,6 @@ import React from 'react';
 const Profile = () => {
   const maxDate = new Date();
   const minDate = new Date();
-
   maxDate.setMonth(minDate.getMonth() + 1);
 
   async function getAllAppointments() {
@@ -30,7 +29,7 @@ const Profile = () => {
 
   return (
     <>
-      <DashboardPage data={data} loading={isLoading} />
+      <DashboardPage data={data} />
     </>
   );
 };

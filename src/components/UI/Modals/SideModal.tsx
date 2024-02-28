@@ -1,16 +1,17 @@
 import React from 'react';
 import CustomInput from '../Input/Input';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { IAppointmentProps } from '@/types/appointment.interface';
 import { SideModalProps } from '@/types/modal.interface';
-
-const currentDate: Date = new Date();
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { v4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 
 const SideModal: React.FC<SideModalProps> = ({
   showMenu,
   setShowMenu,
   date,
-  onSubmit,
   time,
   setTime,
   appointments,
@@ -18,8 +19,32 @@ const SideModal: React.FC<SideModalProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const { mutate: createAppointment, isPending: createPending } = useMutation({
+    mutationFn: async (data: FieldValues) =>
+      await axios.post('/api/appointment', {
+        email: data.email,
+        id: v4(),
+        first_name: data.first_name,
+        last_name: data.last_name,
+        open_to_earlier: data.open_to_earlier,
+        date,
+        time,
+        isPending: false,
+        status: 'BOOKED',
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      router.push('/success');
+    },
+    onError: (err) => {
+      console.error('Error creating appointment :', err);
+    },
+  });
 
   const isAvailable = (timeSlot: string) => {
     return !appointments.some(
@@ -83,7 +108,9 @@ const SideModal: React.FC<SideModalProps> = ({
             <p className="text-xl mb-4">
               Selected time: <span className="font-bold">{time}</span>
             </p>{' '}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={handleSubmit((formData) => createAppointment(formData))}
+            >
               {' '}
               <CustomInput
                 label="Email address"
@@ -134,9 +161,9 @@ const SideModal: React.FC<SideModalProps> = ({
               <button
                 className="submit_btn mt-4"
                 type="submit"
-                disabled={isSubmitting}
+                disabled={createPending}
               >
-                {isSubmitting ? 'Loading...' : 'Confirm'}
+                {createPending ? 'Loading...' : 'Confirm'}
               </button>
             </form>
           </div>

@@ -1,7 +1,7 @@
 import { IAppointmentProps } from './appointment.interface';
 
 export interface ICalendarComponentProps {
-  appointments: IAppointmentProps[];
+  data: IAppointmentProps[];
   disabledDates: string[];
   date: Date;
   setDate: (date: Date) => void;
