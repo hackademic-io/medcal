@@ -1,12 +1,27 @@
 import { IMainModalProps } from '@/types/modal.interface';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import React from 'react';
 
 const MainModal: React.FC<IMainModalProps> = ({
   showMenu,
   setShowMenu,
-  deleteAppointment,
   appointmentId,
 }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteAppointment, isPending: deletePending } = useMutation({
+    mutationFn: async () =>
+      await axios.delete(`/api/appointment/${appointmentId}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      setShowMenu(!showMenu);
+    },
+    onError: (err) => {
+      console.error('Error deleting appointment :', err);
+    },
+  });
+
   return (
     <>
       {' '}
@@ -27,16 +42,16 @@ const MainModal: React.FC<IMainModalProps> = ({
           </div>
           <div className="flex gap-6">
             <button
-              onClick={() => {
-                deleteAppointment(appointmentId);
-              }}
+              onClick={() => deleteAppointment()}
+              disabled={deletePending}
               className="blue_btn "
             >
-              Yes, i want to cancel
+              {deletePending ? 'Canceling...' : 'Yes, i want to cancel'}
             </button>
             <button
               onClick={(e) => setShowMenu(!showMenu)}
               className="cancel_btn"
+              disabled={deletePending}
             >
               I changed my mind.
             </button>

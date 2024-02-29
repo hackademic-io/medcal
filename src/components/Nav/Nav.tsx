@@ -16,14 +16,14 @@ const Nav = () => {
       <div>
         {pathname === '/' || pathname === '/dashboard' ? (
           <span className="text-4xl font-bold text-blue-600 cursor-default">
-            MedPoint
+            MedCal
           </span>
         ) : (
           <Link
             className="text-4xl font-bold text-blue-600"
             href={redirectLink}
           >
-            MedPoint
+            MedCal
           </Link>
         )}
       </div>

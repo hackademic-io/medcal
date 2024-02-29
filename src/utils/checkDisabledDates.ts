@@ -1,6 +1,6 @@
 import { IAppointmentProps } from '@/types/appointment.interface';
 
-export default function checkDisabledDates(appointments: any) {
+export default function checkDisabledDates(appointments: IAppointmentProps[]) {
   const disabledDates = new Set();
 
   appointments.forEach(({ date }: { date: Date }) => {
