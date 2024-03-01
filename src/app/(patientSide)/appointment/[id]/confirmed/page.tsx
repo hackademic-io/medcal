@@ -4,9 +4,15 @@ import ClientError from '@/components/ClientError/ClientError';
 import LoadingPage from '@/components/Loading/LoadingPage';
 import RedirectFromEmail from '@/components/RedirectFromEmail/FormFromEmail';
 import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function Page({ params }: { params: { id: string } }) {
+  const searchParams = useSearchParams();
+
+  const hash = searchParams.get('hash');
+  const iv = searchParams.get('iv');
+
   useEffect(() => {
     sendConfirmRequest();
   }, []);
@@ -16,7 +22,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   async function sendConfirmRequest() {
     try {
-      const response = await axios.put(`/api/appointment/confirm/${params.id}`);
+      const response = await axios.put(
+        `/api/appointment/confirm/${params.id}?hash=${hash}&iv=${iv}`
+      );
 
       setLoading(false);
     } catch (error: any) {
