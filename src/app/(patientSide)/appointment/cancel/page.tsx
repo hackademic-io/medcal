@@ -7,30 +7,35 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page() {
   const searchParams = useSearchParams();
 
   const hash = searchParams.get('hash');
-  const iv = searchParams.get('iv');
+  const encryptionIV = searchParams.get('iv');
 
   useEffect(() => {
-    sendConfirmRequest();
+    sendCancelRequest();
   }, []);
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function sendConfirmRequest() {
+  async function sendCancelRequest() {
     try {
-      const response = await axios.put(
-        `/api/appointment/confirm/${params.id}?hash=${hash}&iv=${iv}`
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/cancel`,
+        {
+          data: { hash, encryptionIV },
+        }
       );
-
       setLoading(false);
     } catch (error: any) {
       console.error(error.response.data.error);
       setLoading(false);
-      setError(error.response.data.error);
+      setError(
+        error.response.data.error ||
+          'Something went wrong, please try again later'
+      );
     }
   }
 
@@ -44,7 +49,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <RedirectFromEmail
-      message={'Your appointment is confirmed! See you soon!'}
+      message={'Your appointment is canceled! Have a great day!'}
     />
   );
 }
