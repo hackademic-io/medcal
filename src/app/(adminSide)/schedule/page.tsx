@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import CalendarComponent from '@/components/Calendar/CalendarComponent';
-import axios from 'axios';
-import checkDisabledDates from '@/utils/checkDisabledDates';
-import AuthRequired from '@/components/Routes/AuthRequired';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState } from "react";
+import CalendarComponent from "@/components/Calendar/CalendarComponent";
+import axios from "axios";
+import checkDisabledDates from "@/utils/checkDisabledDates";
+import AuthRequired from "@/components/Routes/AuthRequired";
+import { useQuery } from "@tanstack/react-query";
 
 const Schedule = () => {
   const minDate = new Date();
@@ -17,14 +17,14 @@ const Schedule = () => {
 
   async function getAllAppointments() {
     const { data } = await axios.get(
-      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`,
     );
 
     return data;
   }
 
   const { data, isError, isLoading } = useQuery({
-    queryKey: ['appointments'],
+    queryKey: ["appointments"],
     queryFn: getAllAppointments,
   });
 

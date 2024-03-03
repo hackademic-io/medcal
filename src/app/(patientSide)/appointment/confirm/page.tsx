@@ -7,25 +7,26 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export default function RejectedPage() {
-  useEffect(() => {
-    sendRejectToNotificationService();
-  }, []);
-
+export default function Page() {
   const searchParams = useSearchParams();
 
   const hash = searchParams.get("hash");
   const encryptionIV = searchParams.get("iv");
 
+  useEffect(() => {
+    sendConfirmRequest();
+  }, []);
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function sendRejectToNotificationService() {
+  async function sendConfirmRequest() {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_NOTIFICATION_URL}/notification/rescheduling-reject`,
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/confirm`,
         { hash, encryptionIV },
       );
+
       setLoading(false);
     } catch (error: any) {
       console.error(error.response.data.error);
@@ -47,7 +48,7 @@ export default function RejectedPage() {
 
   return (
     <RedirectFromEmail
-      message={"You rejected the new slot! We will not contact you again!"}
+      message={"Your appointment is confirmed! See you soon!"}
     />
   );
 }

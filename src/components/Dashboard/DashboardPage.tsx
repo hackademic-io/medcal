@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { IAppointmentProps } from '@/types/appointment.interface';
-import { IDashboardPageProps } from '@/types/dashboard.interface';
-import Link from 'next/link';
-import { useState } from 'react';
-import AppointmentCard from './AppointmentCard';
-import MainModal from '../UI/Modals/MainModal';
-import { useDisableBodyScroll } from '@/hooks/useDisableBodyScroll';
-import Dropdown from '../UI/Dropdown/Dropdown';
+import { IAppointmentProps } from "@/types/appointment.interface";
+import { IDashboardPageProps } from "@/types/dashboard.interface";
+import Link from "next/link";
+import { useState } from "react";
+import AppointmentCard from "./AppointmentCard";
+import MainModal from "../UI/Modals/MainModal";
+import { useDisableBodyScroll } from "@/hooks/useDisableBodyScroll";
+import Dropdown from "../UI/Dropdown/Dropdown";
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [appointmentId, setAppointmentId] = useState('');
+  const [appointmentId, setAppointmentId] = useState("");
   const [appointments, setAppointments] = useState(data);
 
   useDisableBodyScroll(showMenu);
@@ -22,9 +22,9 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   };
 
   const handleDropdownChange = (selectedOption: any) => {
-    if (selectedOption === 'Sort By Date (Closest First)') {
+    if (selectedOption === "Sort By Date (Closest First)") {
       FarToCloseFilter();
-    } else if (selectedOption === 'Sort By Date (Farthest First)') {
+    } else if (selectedOption === "Sort By Date (Farthest First)") {
       CloseToFarFilter();
     }
   };
@@ -33,7 +33,9 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
     setAppointments(
       appointments
         .slice()
-        .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+        .sort(
+          (a, b) => new Date(a.date).getDate() - new Date(b.date).getDate(),
+        ),
     );
   };
 
@@ -41,19 +43,21 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
     setAppointments(
       appointments
         .slice()
-        .sort((a, b) => new Date(b.date).getDate() - new Date(a.date).getDate())
+        .sort(
+          (a, b) => new Date(b.date).getDate() - new Date(a.date).getDate(),
+        ),
     );
   };
 
   const filterDatesOptions = [
-    { value: 'Filter', label: 'Filter' },
+    { value: "Filter", label: "Filter" },
     {
-      value: 'Farthest First',
-      label: 'Sort By Date (Farthest First)',
+      value: "Farthest First",
+      label: "Sort By Date (Farthest First)",
     },
     {
-      value: 'Closest First',
-      label: 'Sort By Date (Closest First)',
+      value: "Closest First",
+      label: "Sort By Date (Closest First)",
     },
   ];
 

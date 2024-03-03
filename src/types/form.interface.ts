@@ -1,11 +1,11 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent } from "react";
 import {
   FieldError,
   FieldErrorsImpl,
   FieldValues,
   Merge,
   UseFormRegister,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 export interface CustomInputProps {
   type: string;

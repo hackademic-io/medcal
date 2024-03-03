@@ -1,12 +1,12 @@
-import React from 'react';
-import CustomInput from '../Input/Input';
-import { FieldValues, useForm } from 'react-hook-form';
-import { IAppointmentProps } from '@/types/appointment.interface';
-import { SideModalProps } from '@/types/modal.interface';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import { v4 } from 'uuid';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import CustomInput from "../Input/Input";
+import { FieldValues, useForm } from "react-hook-form";
+import { IAppointmentProps } from "@/types/appointment.interface";
+import { SideModalProps } from "@/types/modal.interface";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { v4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 const SideModal: React.FC<SideModalProps> = ({
   showMenu,
@@ -26,7 +26,7 @@ const SideModal: React.FC<SideModalProps> = ({
 
   const { mutate: createAppointment, isPending: createPending } = useMutation({
     mutationFn: async (data: FieldValues) =>
-      await axios.post('/api/appointment', {
+      await axios.post("/api/appointment", {
         email: data.email,
         id: v4(),
         first_name: data.first_name,
@@ -35,44 +35,44 @@ const SideModal: React.FC<SideModalProps> = ({
         date,
         time,
         isPending: false,
-        status: 'BOOKED',
+        status: "BOOKED",
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['appointments'] });
-      router.push('/success');
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      router.push("/success");
     },
     onError: (err) => {
-      console.error('Error creating appointment :', err);
+      console.error("Error creating appointment :", err);
     },
   });
 
   const isAvailable = (timeSlot: string) => {
     return !appointments.some(
-      (appointment: IAppointmentProps) => appointment.time === timeSlot
+      (appointment: IAppointmentProps) => appointment.time === timeSlot,
     );
   };
 
   const timeSlots = [
-    '08:00 AM',
-    '09:00 AM',
-    '10:00 AM',
-    '01:00 PM',
-    '02:00 PM',
-    '03:00 PM',
+    "08:00 AM",
+    "09:00 AM",
+    "10:00 AM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
   ];
 
   function display(e: any) {
-    const buttonText = e?.target?.innerText ?? '';
+    const buttonText = e?.target?.innerText ?? "";
 
     setTime(buttonText);
   }
 
   return (
     <>
-      {' '}
+      {" "}
       <div
         className={`absolute top-0 right-0 bg-white min-h-screen w-1/3 p-8 transition-all duration-300 z-20 ${
-          showMenu ? ' translate-x-0' : 'translate-x-full'
+          showMenu ? " translate-x-0" : "translate-x-full"
         }`}
       >
         <button
@@ -82,7 +82,7 @@ const SideModal: React.FC<SideModalProps> = ({
           Go Back
         </button>
         <h2 className="text-4xl font-bold mt-4">
-          {' '}
+          {" "}
           Available time on: <br /> {date.toDateString()}
         </h2>
 
@@ -97,7 +97,7 @@ const SideModal: React.FC<SideModalProps> = ({
                 onClick={(e) => display(e)}
                 disabled={isDisabled}
               >
-                {times}{' '}
+                {times}{" "}
               </button>
             );
           })}
@@ -107,11 +107,11 @@ const SideModal: React.FC<SideModalProps> = ({
           <div>
             <p className="text-xl mb-4">
               Selected time: <span className="font-bold">{time}</span>
-            </p>{' '}
+            </p>{" "}
             <form
               onSubmit={handleSubmit((formData) => createAppointment(formData))}
             >
-              {' '}
+              {" "}
               <CustomInput
                 label="Email address"
                 placeholder="Email"
@@ -151,7 +151,7 @@ const SideModal: React.FC<SideModalProps> = ({
                   type="checkbox"
                   id="open_to_earlier"
                   className=" mr-4 w-7 h-7 cursor-pointer"
-                  {...register('open_to_earlier')}
+                  {...register("open_to_earlier")}
                 />
                 <label className="text-lg">
                   Does the patient wish to inquire about the availability of the
@@ -163,7 +163,7 @@ const SideModal: React.FC<SideModalProps> = ({
                 type="submit"
                 disabled={createPending}
               >
-                {createPending ? 'Loading...' : 'Confirm'}
+                {createPending ? "Loading..." : "Confirm"}
               </button>
             </form>
           </div>
@@ -172,8 +172,8 @@ const SideModal: React.FC<SideModalProps> = ({
       <div
         className={`bg-black z-10 absolute w-screen h-screen top-0 left-0 duration-300 transition-all ${
           showMenu
-            ? 'opacity-30 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+            ? "opacity-30 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       ></div>
     </>

@@ -1,4 +1,4 @@
-import { IAppointmentProps } from './appointment.interface';
+import { IAppointmentProps } from "./appointment.interface";
 
 export interface IDashboardPageProps {
   data: IAppointmentProps[];

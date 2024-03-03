@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 function AuthRequired(Component: any) {
   return function whenLoggedIn(props: any) {
@@ -14,7 +14,7 @@ function AuthRequired(Component: any) {
     }
 
     if (!user) {
-      router.push('/');
+      router.push("/");
     }
 
     return <Component {...props} />;

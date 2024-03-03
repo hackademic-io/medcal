@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import DashboardPage from '@/components/Dashboard/DashboardPage';
-import AuthRequired from '@/components/Routes/AuthRequired';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import React from 'react';
+import DashboardPage from "@/components/Dashboard/DashboardPage";
+import AuthRequired from "@/components/Routes/AuthRequired";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React from "react";
 
 const Profile = () => {
   const maxDate = new Date();
@@ -13,14 +13,14 @@ const Profile = () => {
 
   async function getAllAppointments() {
     const { data } = await axios.get(
-      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`,
     );
 
     return data;
   }
 
   const { data, isError, isLoading } = useQuery({
-    queryKey: ['appointments'],
+    queryKey: ["appointments"],
     queryFn: getAllAppointments,
   });
 

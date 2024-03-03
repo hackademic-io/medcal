@@ -1,5 +1,5 @@
-import { FieldValues } from 'react-hook-form';
-import { IAppointmentProps } from './appointment.interface';
+import { FieldValues } from "react-hook-form";
+import { IAppointmentProps } from "./appointment.interface";
 
 export interface IMainModalProps {
   showMenu: boolean;

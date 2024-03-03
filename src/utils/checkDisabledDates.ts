@@ -1,4 +1,4 @@
-import { IAppointmentProps } from '@/types/appointment.interface';
+import { IAppointmentProps } from "@/types/appointment.interface";
 
 export default function checkDisabledDates(appointments: IAppointmentProps[]) {
   const disabledDates = new Set();
@@ -6,7 +6,7 @@ export default function checkDisabledDates(appointments: IAppointmentProps[]) {
   appointments.forEach(({ date }: { date: Date }) => {
     if (!disabledDates.has(date)) {
       const appointmentsForDate = appointments.filter(
-        (appointment: IAppointmentProps) => appointment.date === date
+        (appointment: IAppointmentProps) => appointment.date === date,
       );
 
       const bookedTimesCount = appointmentsForDate.reduce(
@@ -16,7 +16,7 @@ export default function checkDisabledDates(appointments: IAppointmentProps[]) {
           }
           return count;
         },
-        0
+        0,
       );
 
       if (bookedTimesCount === 6) {

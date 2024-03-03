@@ -1,8 +1,8 @@
 import {
   CustomDropdownProps,
   DropdownOptionType,
-} from '@/types/form.interface';
-import React from 'react';
+} from "@/types/form.interface";
+import React from "react";
 
 const Dropdown: React.FC<CustomDropdownProps> = ({
   options,

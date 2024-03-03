@@ -1,7 +1,7 @@
-import { getAccessToken } from '@auth0/nextjs-auth0';
-import axios from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextRequest, NextResponse } from 'next/server';
+import { getAccessToken } from "@auth0/nextjs-auth0";
+import axios from "axios";
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest, res: NextApiResponse) => {
   const appointment = await req.json();
@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      }
+      },
     );
 
     const newAppointment = response.data;
@@ -29,8 +29,8 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
 };
 
 export const GET = async (req: NextRequest, res: NextApiResponse) => {
-  const maxDate = req.nextUrl.searchParams.get('MaxDate');
-  const minDate = req.nextUrl.searchParams.get('MinDate');
+  const maxDate = req.nextUrl.searchParams.get("MaxDate");
+  const minDate = req.nextUrl.searchParams.get("MinDate");
 
   const { accessToken } = await getAccessToken();
 
@@ -41,7 +41,7 @@ export const GET = async (req: NextRequest, res: NextApiResponse) => {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      }
+      },
     );
 
     const appointments = response.data;

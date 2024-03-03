@@ -1,7 +1,7 @@
-import { IMainModalProps } from '@/types/modal.interface';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import React from 'react';
+import { IMainModalProps } from "@/types/modal.interface";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import React from "react";
 
 const MainModal: React.FC<IMainModalProps> = ({
   showMenu,
@@ -14,21 +14,21 @@ const MainModal: React.FC<IMainModalProps> = ({
     mutationFn: async () =>
       await axios.delete(`/api/appointment/${appointmentId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['appointments'] });
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
       setShowMenu(!showMenu);
     },
     onError: (err) => {
-      console.error('Error deleting appointment :', err);
+      console.error("Error deleting appointment :", err);
     },
   });
 
   return (
     <>
-      {' '}
+      {" "}
       <div>
         <div
           className={`absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 flex-col items-center bg-white p-12 transition-all duration-300 z-20 ${
-            showMenu ? ' translate-x-0' : 'translate-x-full'
+            showMenu ? " translate-x-0" : "translate-x-full"
           }`}
         >
           <button
@@ -46,7 +46,7 @@ const MainModal: React.FC<IMainModalProps> = ({
               disabled={deletePending}
               className="blue_btn "
             >
-              {deletePending ? 'Canceling...' : 'Yes, i want to cancel'}
+              {deletePending ? "Canceling..." : "Yes, i want to cancel"}
             </button>
             <button
               onClick={(e) => setShowMenu(!showMenu)}
@@ -61,8 +61,8 @@ const MainModal: React.FC<IMainModalProps> = ({
       <div
         className={`bg-black z-10 absolute w-screen h-screen min-h-[200%] top-0 left-0 duration-300 transition-all ${
           showMenu
-            ? 'opacity-30 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+            ? "opacity-30 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       ></div>
     </>

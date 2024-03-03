@@ -1,5 +1,5 @@
-import React from 'react';
-import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner';
+import React from "react";
+import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 
 const LoadingPage = () => {
   return (
