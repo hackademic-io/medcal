@@ -1,6 +1,5 @@
-import { IAppointmentCardProps } from '@/types/dashboard.interface';
-import Link from 'next/link';
-import React from 'react';
+import { IAppointmentCardProps } from "@/types/dashboard.interface";
+import React from "react";
 
 const AppointmentCard: React.FC<IAppointmentCardProps> = ({
   data,

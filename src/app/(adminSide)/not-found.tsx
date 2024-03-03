@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 const NotFound = () => {
   return (
@@ -7,7 +7,7 @@ const NotFound = () => {
       <div>
         <p className="mb-5 text-5xl">Page not found</p>
         <div className="flex justify-center mt-6">
-          <Link href={'/dashboard'} className="blue_btn">
+          <Link href={"/dashboard"} className="blue_btn">
             Go to your profile
           </Link>
         </div>

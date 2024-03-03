@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
 const SuccessPage = () => {
   return (
@@ -9,7 +9,7 @@ const SuccessPage = () => {
           The appointment was successfully booked!
         </p>
         <div className="flex justify-center mt-6 gap-10">
-          <Link href={'/dashboard'} className="blue_btn h-14">
+          <Link href={"/dashboard"} className="blue_btn h-14">
             Go to your dashboard
           </Link>
         </div>

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import ClientError from '@/components/ClientError/ClientError';
-import LoadingPage from '@/components/Loading/LoadingPage';
-import RedirectFromEmail from '@/components/RedirectFromEmail/FormFromEmail';
-import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import ClientError from "@/components/ClientError/ClientError";
+import LoadingPage from "@/components/Loading/LoadingPage";
+import RedirectFromEmail from "@/components/RedirectFromEmail/FormFromEmail";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export default function ApprovedPage() {
   useEffect(() => {
@@ -14,8 +14,8 @@ export default function ApprovedPage() {
 
   const searchParams = useSearchParams();
 
-  const hash = searchParams.get('hash');
-  const encryptionIV = searchParams.get('iv');
+  const hash = searchParams.get("hash");
+  const encryptionIV = searchParams.get("iv");
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export default function ApprovedPage() {
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/reschedule`,
-        { hash, encryptionIV }
+        { hash, encryptionIV },
       );
 
       setLoading(false);
@@ -33,7 +33,7 @@ export default function ApprovedPage() {
       setLoading(false);
       setError(
         error.response.data.error ||
-          'Something went wrong, please try again later'
+          "Something went wrong, please try again later",
       );
     }
   }
@@ -49,7 +49,7 @@ export default function ApprovedPage() {
   return (
     <RedirectFromEmail
       message={
-        'Your new appointment is booked! Your previous appointment will be canceled!'
+        "Your new appointment is booked! Your previous appointment will be canceled!"
       }
     />
   );

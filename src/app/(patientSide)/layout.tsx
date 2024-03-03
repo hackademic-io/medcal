@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import '../../styles/globals.css';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import type { Metadata } from "next";
+import "../../styles/globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata: Metadata = {
-  title: 'MedPoint',
-  description: 'Medical appointment system',
+  title: "MedPoint",
+  description: "Medical appointment system",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        {' '}
+        {" "}
         <body className="relative">
           <main className="app">
             <nav className="w-full flex justify-center items-center mb-5 mt-5 ">

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import SideModal from '../UI/Modals/SideModal';
-import { IAppointmentProps } from '@/types/appointment.interface';
-import { ICalendarComponentProps } from '@/types/calendar.interface';
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import SideModal from "../UI/Modals/SideModal";
+import { IAppointmentProps } from "@/types/appointment.interface";
+import { ICalendarComponentProps } from "@/types/calendar.interface";
 
 const CalendarComponent: React.FC<ICalendarComponentProps> = ({
   data,
@@ -34,7 +34,7 @@ const CalendarComponent: React.FC<ICalendarComponentProps> = ({
   };
 
   const appointmentsForSpecificDate = data.filter(
-    (app: IAppointmentProps) => new Date(app.date).getDate() === date.getDate()
+    (app: IAppointmentProps) => new Date(app.date).getDate() === date.getDate(),
   );
 
   return (
