@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 const MainPage = () => {
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
   return (
     <div className="h-full flex flex-col justify-center items-center text-center ">
@@ -22,8 +22,11 @@ const MainPage = () => {
               Go to profile
             </Link>
           ) : (
-            <a href="/api/auth/login" className="blue_btn mt-6 w-1/3 h-20">
-              Log in / Sign up
+            <a
+              href="/api/auth/login"
+              className={`blue_btn mt-6 w-1/3 h-20 ${isLoading ? "pointer-events-none opacity-50" : ""}`}
+            >
+              {isLoading ? "Loading..." : "Log in / Sign up"}
             </a>
           )}{" "}
         </div>
