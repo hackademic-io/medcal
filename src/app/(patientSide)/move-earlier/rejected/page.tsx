@@ -3,51 +3,48 @@
 import ClientError from "@/components/ClientError/ClientError";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import RedirectFromEmail from "@/components/RedirectFromEmail/FormFromEmail";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function RejectedPage() {
-  useEffect(() => {
-    sendRejectToNotificationService();
-  }, []);
-
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    mutation.mutate();
+  }, []);
 
   const hash = searchParams.get("hash");
   const encryptionIV = searchParams.get("iv");
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const mutation = useMutation<
+    unknown,
+    { response?: { data: { error: string } } }
+  >({
+    mutationFn: async () =>
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/reject-reschedule`,
+        { hash, encryptionIV }
+      ),
+  });
 
-  async function sendRejectToNotificationService() {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_NOTIFICATION_URL}/notification/rescheduling-reject`,
-        { hash, encryptionIV },
-      );
-      setLoading(false);
-    } catch (error: any) {
-      console.error(error.response.data.error);
-      setLoading(false);
-      setError(
-        error.response.data.error ||
-          "Something went wrong, please try again later",
-      );
-    }
-  }
+  const errorMessage =
+    mutation.error?.response?.data.error || "Something went wrong";
 
-  if (loading) {
+  if (mutation.isPending) {
     return <LoadingPage />;
   }
 
-  if (error) {
-    return <ClientError error={error} />;
+  if (mutation.isError) {
+    return <ClientError error={errorMessage} />;
   }
 
-  return (
-    <RedirectFromEmail
-      message={"You rejected the new slot! We will not contact you again!"}
-    />
-  );
+  if (mutation.isSuccess) {
+    return (
+      <RedirectFromEmail
+        message={"You rejected the new slot! We will not contact you again!"}
+      />
+    );
+  }
 }
