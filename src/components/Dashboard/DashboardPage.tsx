@@ -21,6 +21,10 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
     setShowMenu(true);
   };
 
+  const bookedAppointments = appointments.filter(
+    (app) => app.status !== "CANCELED",
+  );
+
   const handleDropdownChange = (selectedOption: any) => {
     if (selectedOption === "Sort By Date (Closest First)") {
       FarToCloseFilter();
