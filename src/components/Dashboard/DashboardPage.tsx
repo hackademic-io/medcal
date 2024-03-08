@@ -3,7 +3,7 @@
 import { IAppointmentProps } from "@/types/appointment.interface";
 import { IDashboardPageProps } from "@/types/dashboard.interface";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 import MainModal from "../UI/Modals/MainModal";
 import { useDisableBodyScroll } from "@/hooks/useDisableBodyScroll";
@@ -14,16 +14,16 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   const [appointmentId, setAppointmentId] = useState("");
   const [appointments, setAppointments] = useState(data);
 
+  useEffect(() => {
+    setAppointments(data.filter((app) => app.status !== "CANCELED"));
+  }, [data]);
+
   useDisableBodyScroll(showMenu);
 
   const deleteButton = (id: string) => {
     setAppointmentId(id);
     setShowMenu(true);
   };
-
-  const bookedAppointments = appointments.filter(
-    (app) => app.status !== "CANCELED",
-  );
 
   const handleDropdownChange = (selectedOption: any) => {
     if (selectedOption === "Sort By Date (Closest First)") {
