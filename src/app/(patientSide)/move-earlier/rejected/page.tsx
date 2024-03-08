@@ -3,10 +3,11 @@
 import ClientError from "@/components/ClientError/ClientError";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import RedirectFromEmail from "@/components/RedirectFromEmail/FormFromEmail";
+import { APPOINTMENT_URL } from "@/config/config";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 export default function RejectedPage() {
   const searchParams = useSearchParams();
@@ -24,8 +25,8 @@ export default function RejectedPage() {
   >({
     mutationFn: async () =>
       await axios.put(
-        `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/reject-reschedule`,
-        { hash, encryptionIV }
+        `${APPOINTMENT_URL}/patient/appointment/reject-reschedule`,
+        { hash, encryptionIV },
       ),
   });
 

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 import MainModal from "../UI/Modals/MainModal";
-import { useDisableBodyScroll } from "@/hooks/useDisableBodyScroll";
 import Dropdown from "../UI/Dropdown/Dropdown";
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
@@ -17,8 +16,6 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   useEffect(() => {
     setAppointments(data.filter((app) => app.status !== "CANCELED"));
   }, [data]);
-
-  // useDisableBodyScroll(showMenu);
 
   const deleteButton = (id: string) => {
     setAppointmentId(id);
