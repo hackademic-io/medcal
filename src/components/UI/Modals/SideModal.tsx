@@ -7,6 +7,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { v4 } from "uuid";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SideModal: React.FC<SideModalProps> = ({
   showMenu,
@@ -43,6 +45,16 @@ const SideModal: React.FC<SideModalProps> = ({
       router.push("/success");
     },
     onError: (err) => {
+      toast.error("Error creating appointment", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.error("Error creating appointment :", err);
     },
   });
@@ -184,6 +196,7 @@ const SideModal: React.FC<SideModalProps> = ({
             : "opacity-0 pointer-events-none"
         }`}
       ></div>
+      <ToastContainer />
     </>
   );
 };

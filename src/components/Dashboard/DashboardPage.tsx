@@ -18,7 +18,7 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
     setAppointments(data.filter((app) => app.status !== "CANCELED"));
   }, [data]);
 
-  useDisableBodyScroll(showMenu);
+  // useDisableBodyScroll(showMenu);
 
   const deleteButton = (id: string) => {
     setAppointmentId(id);
@@ -103,13 +103,12 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
           </div>
         </div>
       </div>
-      {showMenu ? (
-        <MainModal
-          showMenu={showMenu}
-          setShowMenu={setShowMenu}
-          appointmentId={appointmentId}
-        />
-      ) : null}
+
+      <MainModal
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        appointmentId={appointmentId}
+      />
     </div>
   );
 };
