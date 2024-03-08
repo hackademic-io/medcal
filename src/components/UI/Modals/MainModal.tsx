@@ -14,7 +14,7 @@ const MainModal: React.FC<IMainModalProps> = ({
 
   const { mutate: deleteAppointment, isPending: deletePending } = useMutation({
     mutationFn: async () =>
-      await axios.delete(`/api/appointmentss/${appointmentId}`),
+      await axios.delete(`/api/appointment/${appointmentId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["appointments"] });
       setShowMenu(!showMenu);
@@ -22,7 +22,7 @@ const MainModal: React.FC<IMainModalProps> = ({
     onError: (err) => {
       toast.error("Error canceling appointment", {
         position: "bottom-left",
-        autoClose: 4000,
+        autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
