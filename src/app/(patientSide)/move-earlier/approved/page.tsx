@@ -7,9 +7,17 @@ import { APPOINTMENT_URL } from "@/config/config";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 export default function ApprovedPage() {
+  return (
+    <Suspense fallback={<LoadingPage message="Loading..." />}>
+      <InnerPage />
+    </Suspense>
+  );
+}
+
+function InnerPage() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -34,7 +42,7 @@ export default function ApprovedPage() {
     mutation.error?.response?.data.error || "Something went wrong";
 
   if (mutation.isPending) {
-    return <LoadingPage />;
+    return <LoadingPage message={"Your request is proceeding..."} />;
   }
 
   if (mutation.isError) {
