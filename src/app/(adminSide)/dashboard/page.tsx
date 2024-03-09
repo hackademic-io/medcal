@@ -13,7 +13,7 @@ const Profile = () => {
 
   async function getAllAppointments() {
     const { data } = await axios.get(
-      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`
+      `/api/appointment?MaxDate=${maxDate}&MinDate=${minDate}`,
     );
 
     return data;
@@ -23,8 +23,6 @@ const Profile = () => {
     queryKey: ["appointments"],
     queryFn: getAllAppointments,
   });
-
-  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>There was an error with getting appointments</div>;

@@ -43,9 +43,10 @@ const CustomInput: React.FC<CustomInputProps> = ({
             errors && "border-red-500"
           } `}
         />
-        {errors && (
-          <p className="text-red-500 mt-2">{`${label} field is required`}</p>
-        )}
+
+        <p
+          className={`text-red-500 mt-1 text-sm transition-all ${errors ? "opacity-100" : "opacity-0"}`}
+        >{`${label} field is required`}</p>
       </div>
     </div>
   );

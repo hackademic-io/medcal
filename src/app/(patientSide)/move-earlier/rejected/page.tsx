@@ -3,12 +3,21 @@
 import ClientError from "@/components/ClientError/ClientError";
 import LoadingPage from "@/components/Loading/LoadingPage";
 import RedirectFromEmail from "@/components/RedirectFromEmail/FormFromEmail";
+import { APPOINTMENT_URL } from "@/config/config";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 
 export default function RejectedPage() {
+  return (
+    <Suspense fallback={<LoadingPage message="Loading..." />}>
+      <InnerPage />
+    </Suspense>
+  );
+}
+
+function InnerPage() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -24,8 +33,8 @@ export default function RejectedPage() {
   >({
     mutationFn: async () =>
       await axios.put(
-        `${process.env.NEXT_PUBLIC_APPOINTMENT_URL}/patient/appointment/reject-reschedule`,
-        { hash, encryptionIV }
+        `${APPOINTMENT_URL}/patient/appointment/reject-reschedule`,
+        { hash, encryptionIV },
       ),
   });
 
@@ -33,7 +42,7 @@ export default function RejectedPage() {
     mutation.error?.response?.data.error || "Something went wrong";
 
   if (mutation.isPending) {
-    return <LoadingPage />;
+    return <LoadingPage message={"Your request is proceeding..."} />;
   }
 
   if (mutation.isError) {

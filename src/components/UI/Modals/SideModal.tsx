@@ -7,6 +7,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { v4 } from "uuid";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SideModal: React.FC<SideModalProps> = ({
   showMenu,
@@ -19,6 +21,7 @@ const SideModal: React.FC<SideModalProps> = ({
   const {
     register,
     handleSubmit,
+    clearErrors,
     formState: { errors },
   } = useForm();
   const queryClient = useQueryClient();
@@ -42,6 +45,16 @@ const SideModal: React.FC<SideModalProps> = ({
       router.push("/success");
     },
     onError: (err) => {
+      toast.error("Error creating appointment", {
+        position: "bottom-left",
+        autoClose: 4000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.error("Error creating appointment :", err);
     },
   });
@@ -65,6 +78,13 @@ const SideModal: React.FC<SideModalProps> = ({
     const buttonText = e?.target?.innerText ?? "";
 
     setTime(buttonText);
+    clearErrors();
+  }
+
+  function goBack() {
+    setShowMenu(false);
+    setTime(null);
+    clearErrors();
   }
 
   return (
@@ -76,7 +96,7 @@ const SideModal: React.FC<SideModalProps> = ({
         }`}
       >
         <button
-          onClick={(e) => setShowMenu(false)}
+          onClick={goBack}
           className="text-xl font-semibold transition-all hover:opacity-70"
         >
           Go Back
@@ -92,8 +112,8 @@ const SideModal: React.FC<SideModalProps> = ({
             return (
               <button
                 key={index}
-                className={`border-blue-600 border-2 flex justify-center p-3 focus:bg-blue-600 focus:text-white rounded-xl 
-                  disabled:bg-gray-300 disabled:border-gray-600 `}
+                className={`border-blue-600 border-2 flex justify-center p-3 rounded-xl 
+                  disabled:bg-gray-300 disabled:border-gray-600 ${time === times ? "bg-blue-600 text-white" : ""}`}
                 onClick={(e) => display(e)}
                 disabled={isDisabled}
               >
@@ -124,7 +144,7 @@ const SideModal: React.FC<SideModalProps> = ({
                 required={true}
                 cytest="auth-email"
               />
-              <div className="flex gap-6 mt-4">
+              <div className="flex gap-6 mt-2">
                 <CustomInput
                   label="First Name"
                   placeholder="First Name"
@@ -146,7 +166,7 @@ const SideModal: React.FC<SideModalProps> = ({
                   cytest="last-name-input"
                 />
               </div>
-              <div className="flex mt-4 items-center">
+              <div className="flex mt-2 items-center">
                 <input
                   type="checkbox"
                   id="open_to_earlier"
@@ -176,6 +196,7 @@ const SideModal: React.FC<SideModalProps> = ({
             : "opacity-0 pointer-events-none"
         }`}
       ></div>
+      <ToastContainer />
     </>
   );
 };

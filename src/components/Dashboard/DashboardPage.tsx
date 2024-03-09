@@ -3,10 +3,9 @@
 import { IAppointmentProps } from "@/types/appointment.interface";
 import { IDashboardPageProps } from "@/types/dashboard.interface";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppointmentCard from "./AppointmentCard";
 import MainModal from "../UI/Modals/MainModal";
-import { useDisableBodyScroll } from "@/hooks/useDisableBodyScroll";
 import Dropdown from "../UI/Dropdown/Dropdown";
 
 const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
@@ -14,7 +13,9 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   const [appointmentId, setAppointmentId] = useState("");
   const [appointments, setAppointments] = useState(data);
 
-  useDisableBodyScroll(showMenu);
+  useEffect(() => {
+    setAppointments(data.filter((app) => app.status !== "CANCELED"));
+  }, [data]);
 
   const deleteButton = (id: string) => {
     setAppointmentId(id);
@@ -99,13 +100,12 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
           </div>
         </div>
       </div>
-      {showMenu ? (
-        <MainModal
-          showMenu={showMenu}
-          setShowMenu={setShowMenu}
-          appointmentId={appointmentId}
-        />
-      ) : null}
+
+      <MainModal
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        appointmentId={appointmentId}
+      />
     </div>
   );
 };

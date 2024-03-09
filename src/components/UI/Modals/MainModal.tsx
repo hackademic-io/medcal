@@ -2,6 +2,8 @@ import { IMainModalProps } from "@/types/modal.interface";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainModal: React.FC<IMainModalProps> = ({
   showMenu,
@@ -18,17 +20,29 @@ const MainModal: React.FC<IMainModalProps> = ({
       setShowMenu(!showMenu);
     },
     onError: (err) => {
-      console.error("Error deleting appointment :", err);
+      toast.error("Error canceling appointment", {
+        position: "bottom-left",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.error("Error canceling appointment :", err);
     },
   });
 
   return (
     <>
       {" "}
-      <div>
+      <div className={`${showMenu ? "pl-[calc(100vw_-_100%)]" : ""}`}>
         <div
-          className={`absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 flex-col items-center bg-white p-12 transition-all duration-300 z-20 ${
-            showMenu ? " translate-x-0" : "translate-x-full"
+          className={`fixed top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2 flex-col items-center bg-white p-12 transition-all duration-300 z-20 ${
+            showMenu
+              ? " opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
           }`}
         >
           <button
@@ -58,8 +72,9 @@ const MainModal: React.FC<IMainModalProps> = ({
           </div>
         </div>
       </div>
+      <ToastContainer />
       <div
-        className={`bg-black z-10 absolute w-screen h-screen min-h-[200%] top-0 left-0 duration-300 transition-all ${
+        className={`bg-black z-10 fixed w-screen h-screen min-h-[100%] top-0 left-0 duration-300 transition-all ${
           showMenu
             ? "opacity-30 pointer-events-auto"
             : "opacity-0 pointer-events-none"
