@@ -40,7 +40,7 @@ body {
 }
 
 .cancel_btn {
-  @apply rounded-xl border border-red-400 bg-transparent py-1.5 px-5 text-red-600 transition-all hover:bg-red-600 hover:text-white text-center text-lg font-roboto flex items-center justify-center disabled:bg-gray-500 disabled:border-gray-500 disabled:text-white;
+  @apply rounded-xl border border-red-600 bg-transparent py-1.5 px-5 text-red-600 transition-all hover:bg-red-600 hover:text-white text-center text-lg font-roboto flex items-center justify-center disabled:bg-gray-500 disabled:border-gray-500 disabled:text-white;
 }
 
 /* Calendar custom styling */

@@ -13,7 +13,6 @@ const DashboardPage: React.FC<IDashboardPageProps> = ({ data }) => {
   const [appointmentId, setAppointmentId] = useState("");
   const [appointments, setAppointments] = useState(data);
 
-  console.log(appointments);
   useEffect(() => {
     setAppointments(data.filter((app) => app.status !== "CANCELED"));
   }, [data]);
