@@ -21,7 +21,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           htmlFor={name}
-          className="block text-lg font-medium leading-6 text-gray-900 mb-2"
+          className="block text-lg font-medium leading-6 text-gray-900 mb-2 md:text-sm"
         >
           {label}
           <span className="font-normal"> {desc}</span>

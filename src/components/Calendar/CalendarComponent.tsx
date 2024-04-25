@@ -39,7 +39,7 @@ const CalendarComponent: React.FC<ICalendarComponentProps> = ({
 
   return (
     <div className="">
-      <div className="calendar-container h-full w-full overflow-x-hidden">
+      <div className="calendar-container h-full w-full overflow-x-hidden pb-6">
         <SideModal
           date={date}
           showMenu={showMenu}
