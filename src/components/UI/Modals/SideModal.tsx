@@ -91,17 +91,17 @@ const SideModal: React.FC<SideModalProps> = ({
     <>
       {" "}
       <div
-        className={`absolute top-0 right-0 bg-white min-h-screen w-1/3 p-8 transition-all duration-300 z-20 ${
+        className={`absolute top-0 right-0 bg-white min-h-screen w-2/5 p-8 pb-4 transition-all duration-300 z-20 ${
           showMenu ? " translate-x-0" : "translate-x-full"
         }`}
       >
         <button
           onClick={goBack}
-          className="text-xl font-semibold transition-all hover:opacity-70"
+          className="text-xl font-semibold transition-all hover:opacity-70 md:text-base "
         >
           Go Back
         </button>
-        <h2 className="text-4xl font-bold mt-4">
+        <h2 className="text-4xl font-bold mt-4 md:text-3xl">
           {" "}
           Available time on: <br /> {date.toDateString()}
         </h2>
@@ -112,7 +112,7 @@ const SideModal: React.FC<SideModalProps> = ({
             return (
               <button
                 key={index}
-                className={`border-blue-600 border-2 flex justify-center p-3 rounded-xl 
+                className={`border-blue-600 border-2 flex md:text-sm justify-center p-3 rounded-xl 
                   disabled:bg-gray-300 disabled:border-gray-600 ${time === times ? "bg-blue-600 text-white" : ""}`}
                 onClick={(e) => display(e)}
                 disabled={isDisabled}
@@ -125,7 +125,7 @@ const SideModal: React.FC<SideModalProps> = ({
 
         {time ? (
           <div>
-            <p className="text-xl mb-4">
+            <p className="text-xl mb-4 md:text-base">
               Selected time: <span className="font-bold">{time}</span>
             </p>{" "}
             <form
@@ -173,7 +173,7 @@ const SideModal: React.FC<SideModalProps> = ({
                   className=" mr-4 w-7 h-7 cursor-pointer"
                   {...register("open_to_earlier")}
                 />
-                <label className="text-lg">
+                <label className="text-lg md:text-base">
                   Does the patient wish to inquire about the availability of the
                   earliest date?
                 </label>
